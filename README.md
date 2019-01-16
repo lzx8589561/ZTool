@@ -35,6 +35,9 @@ pyrcc5 .\ui\qml.qrc -o .\ui\qml_rc.py | python d:/PythonWorkspace/mysql-tool/mai
 ````
 pyinstaller .\main.spec
 ````
+#### 可执行程序下载
+https://github.com/lzx8589561/mysql-tool/releases/download/F0.0.1/MysqlTool.7z
+
 #### 配置
 ##### mysql
 - 默认端口 3309
