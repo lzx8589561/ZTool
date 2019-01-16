@@ -1,0 +1,36 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Main.qml</file>
+        <file>ui/ZSideMenu.qml</file>
+        <file>ui/ZTopMenu.qml</file>
+        <file>ui/ZTextInput.qml</file>
+        <file>ui/qmldir</file>
+        <file>ui/ZTheme.qml</file>
+        <file>ui/ZText.qml</file>
+        <file>ui/ZButton.qml</file>
+        <file>ui/ZCheckBox.qml</file>
+        <file>ui/ZComboBox.qml</file>
+        <file>ui/ZSlider.qml</file>
+        <file>ui/ZProgressBar.qml</file>
+        <file>ui/ZSwitch.qml</file>
+        <file>ui/ZRadioButton.qml</file>
+        <file>ui/ZLayer.qml</file>
+        <file>ui/fontawesome-4.7.0.ttf</file>
+        <file>ui/ZFontIcon.qml</file>
+        <file>ui/ZLoading.qml</file>
+        <file>ui/ZConfirm.qml</file>
+        <file>ui/ZSnackbar.qml</file>
+        <file>Home.qml</file>
+        <file>ServiceManager.qml</file>
+        <file>Configuration.qml</file>
+        <file>ui/ZHref.qml</file>
+        <file>Setting.qml</file>
+        <file>locales/en_us.qm</file>
+        <file>locales/zh_cn.qm</file>
+        <file>ui/ZLessWindow.qml</file>
+        <file>img/window_close.svg</file>
+        <file>img/db.svg</file>
+        <file>img/line.svg</file>
+        <file>img/icon.ico</file>
+    </qresource>
+</RCC>
