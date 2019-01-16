@@ -4,6 +4,8 @@ PyQt5 + Qt Quick Mysql管理工具
 快速安装Mysql 5.6数据库，只需解压运行点击安装即可。绿色运行，方便迁移，后面会做各个版本之间切换
 
 压缩之后工具+Mysql5.6仅30M左右
+## 预览
+![预览图](preview/demo.gif)
 ## 功能
 - 快速安装
 - 快速启动
@@ -42,7 +44,3 @@ https://github.com/lzx8589561/mysql-tool/releases/download/F0.0.1/MysqlTool.7z
 ##### mysql
 - 默认端口 3309
 - 默认root密码 123456
-
-## 预览
-### 首页
-![预览图](preview/demo.gif)
