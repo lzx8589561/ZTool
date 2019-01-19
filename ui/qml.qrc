@@ -32,5 +32,7 @@
         <file>img/db.svg</file>
         <file>img/line.svg</file>
         <file>img/icon.ico</file>
+        <file>img/max.svg</file>
+        <file>img/min.svg</file>
     </qresource>
 </RCC>

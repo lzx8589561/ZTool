@@ -5,6 +5,8 @@ import sys
 from PyQt5.QtCore import QUrl, QCoreApplication, Qt, QTranslator
 from PyQt5.QtGui import QGuiApplication, QIcon
 from PyQt5.QtQml import QQmlApplicationEngine
+# noinspection PyUnresolvedReferences
+from PyQt5.QtWebEngineWidgets import QWebEngineView
 
 from mysql_configuration import MysqlConfiguration
 from mysql_service_manager import MysqlServiceManager

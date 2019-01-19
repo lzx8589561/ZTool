@@ -1,19 +1,22 @@
-import QtQuick 2.11
+import QtQuick 2.10
 import QtQuick.Window 2.2
-import QtQuick.Controls 2.4
+import QtQuick.Controls 2.3
 import QtQuick.Layouts 1.3
+import QtWebEngine 1.0
 
 import "./ui" as UI
 
 UI.ZLessWindow {
     id: window
     visible: true
-    width: 640
-    height: 480
-    minimumHeight: 480
-    minimumWidth: 640
+    width: 1280
+    height: 720
+    minimumHeight: 1280
+    minimumWidth: 720
     ztop: setting.top
     title: "MySql Tool"
+
+
 
     Item {
         id: root
@@ -43,6 +46,10 @@ UI.ZLessWindow {
                 },
                 {
                     name:qsTr("设置"),
+                    fontIcon:UI.ZFontIcon.fa_cog
+                },
+                {
+                    name:qsTr("Web"),
                     fontIcon:UI.ZFontIcon.fa_cog
                 },
 
@@ -94,6 +101,12 @@ UI.ZLessWindow {
                 }
                 Setting{
 
+                }
+                Item{
+                    WebEngineView {
+                        anchors.fill: parent
+                        url: "http://www.baidu.com/"
+                    }
                 }
             }
 
