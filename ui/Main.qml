@@ -52,6 +52,10 @@ UI.ZLessWindow {
                     name:qsTr("Web"),
                     fontIcon:UI.ZFontIcon.fa_cog
                 },
+                {
+                    name:qsTr("下载"),
+                    fontIcon:UI.ZFontIcon.fa_cog
+                },
 
             ]
             //            ["#EB3C00","#2B579A","#217346","#0078D7","#672B7A","#008272"]
@@ -107,6 +111,9 @@ UI.ZLessWindow {
                         anchors.fill: parent
                         url: "http://www.baidu.com/"
                     }
+                }
+                Item{
+
                 }
             }
 

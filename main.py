@@ -1,8 +1,9 @@
 import _thread
 import ctypes
 import sys
+from os.path import abspath, dirname, join
 
-from PyQt5.QtCore import QUrl, QCoreApplication, Qt, QTranslator
+from PyQt5.QtCore import QCoreApplication, Qt, QTranslator
 from PyQt5.QtGui import QGuiApplication, QIcon
 from PyQt5.QtQml import QQmlApplicationEngine
 # noinspection PyUnresolvedReferences
@@ -15,7 +16,11 @@ from setting import Setting
 from system import System
 # noinspection PyUnresolvedReferences
 from ui.qml_rc import *
-qml_start_time = 0
+
+# 按照qml路径加载，主要由于5.10.1 qrc加载bug，导致qml页面不会刷新
+# 使用qml路径加载可以解决页面没有刷新的问题，打包时关闭
+# qml_path_load = False
+qml_path_load = True
 
 
 def is_admin():
@@ -33,9 +38,10 @@ if __name__ == '__main__':
     if is_admin():
 
         QCoreApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
-        path = 'qrc:/Main.qml'  # 加载的QML文件
+        path = 'qrc:/Main.qml' if not qml_path_load else join(dirname(__file__), 'ui', "Main.qml")  # 加载的QML文件
         app = QGuiApplication(sys.argv)
-        app.setWindowIcon(QIcon(':/img/icon.ico'))
+        app.setWindowIcon(
+            QIcon(':/img/icon.ico') if not qml_path_load else QIcon(join(dirname(__file__), 'ui', "img", "icon.ico")))
         engine = QQmlApplicationEngine()
         context = engine.rootContext()
 
@@ -59,7 +65,8 @@ if __name__ == '__main__':
         lang.load_translator(translator, setting.lang)
         app.installTranslator(translator)
         context.setContextProperty("lang", lang)
-        engine.load(QUrl(path))
+        # engine.load(abspath(path))
+        engine.load(path) if not qml_path_load else engine.load(abspath(path))
         if not engine.rootObjects():
             sys.exit(-1)
         sys.exit(app.exec_())
