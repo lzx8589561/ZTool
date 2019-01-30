@@ -1,4 +1,4 @@
-# ZTool
+# ZTool (原MysqlTool)
 PyQt5 + Qt Quick Controller2
 --------
 快速安装Mysql 5.6数据库，只需解压运行点击安装即可。绿色运行，方便迁移
