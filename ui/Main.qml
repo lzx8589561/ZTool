@@ -10,10 +10,10 @@ import "./ui" as UI
 UI.ZLessWindow {
     id: window
     visible: true
-    width: 1060
-    height: 650
-    minimumHeight: 1060
-    minimumWidth: 650
+    width: 850
+    height: 600
+    minimumHeight: 850
+    minimumWidth: 600
     ztop: setting.top
     title: "ZTool"
     opacity: 0
