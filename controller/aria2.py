@@ -121,6 +121,7 @@ class Aria2(QObject):
         _thread.start_new_thread(self.__add_task, (url, options, flag))
 
     def __add_task(self, url, options, flag):
+        aria2 = Aria2RPC()
         if options is None:
             options = {}
         else:
