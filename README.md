@@ -26,7 +26,7 @@ pyinstaller .\package.spec
 #### 启动运行
 ````
 # shell 环境
-pyrcc5 .\ui\qml.qrc -o .\ui\qml_rc.py | python d:/PythonWorkspace/mysql-tool/main.py
+pyrcc5 .\ui\qml.qrc -o .\ui\qml_rc.py | python ./main.py
 ````
 
 #### 可执行程序下载
