@@ -5,10 +5,12 @@ TextField {
     id: control
     placeholderText: qsTr("Enter content")
     font.family: ZTheme.fontFamily
+    width: 150
+    height: 30
 
     background: Rectangle {
-        implicitWidth: 150
-        implicitHeight: 30
+        implicitWidth: parent.width
+        implicitHeight: parent.height
 //        border.color: "#1a73e8"
         Rectangle{
             color: control.activeFocus ? ZTheme.primaryColor : "#b7b7b7"

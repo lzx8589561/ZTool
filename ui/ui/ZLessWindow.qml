@@ -5,13 +5,22 @@ import QtQuick.Layouts 1.3
 
 Window {
     id: window
-    flags:  ztop ? (Qt.Window | Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint) : (Qt.Window | Qt.FramelessWindowHint)
+    flags:  ztop ? (Qt.Window |
+                    Qt.FramelessWindowHint |
+                    Qt.WindowStaysOnTopHint |
+                    Qt.WindowSystemMenuHint |
+                    Qt.WindowMinimizeButtonHint |
+                    Qt.WindowMaximizeButtonHint)
+                 : (Qt.Window |
+                    Qt.FramelessWindowHint |
+                    Qt.WindowSystemMenuHint |
+                    Qt.WindowMinimizeButtonHint |
+                    Qt.WindowMaximizeButtonHint)
     property bool ztop: false
     property string zicon: "qrc:/img/db.svg"
     property int currVisi: Window.Windowed
     property bool fristWindowLoad: true
-    visibility: Window.Maximized
-
+    visibility: Window.Windowed
     onActiveChanged: {
         if(active){visibility = currVisi}
     }
@@ -19,8 +28,8 @@ Window {
         visibility = currVisi
     }
 
-    function initLoad(){
-        if(fristWindowLoad){dragArea.windowLastPos.x = window.x;dragArea.windowLastPos.y = window.y;fristWindowLoad = false}
+    function savePos(){
+        dragArea.windowLastPos.x = window.x;dragArea.windowLastPos.y = window.y;
     }
     Rectangle{
         id: titleRect
@@ -104,7 +113,7 @@ Window {
                 hoverEnabled: true
                 onClicked: {
                     if(currVisi === Window.Windowed){
-                        initLoad()
+                        savePos()
                         currVisi = Window.Maximized
                     }else{
                         currVisi = Window.Windowed
@@ -165,12 +174,15 @@ Window {
             property point windowLastPos: Qt.point(0,0)
             property bool preMax: false
 
+            // 全屏状态下拖动
+            property point maxStartPos: Qt.point(0,0)
+            // 全屏到窗口位置是否需要重设
+            property bool maxToWinRedirect: false
+
             onPressed: {
-                initLoad()
-                if(currVisi === Window.Maximized){return}
+                if(currVisi === Window.Maximized){console.log("x:"+mouseX);maxStartPos = Qt.point(mouseX,mouseY);maxToWinRedirect = true;return}
+                savePos()
                 startPos = Qt.point(mouseX , mouseY)
-                windowLastPos.x = window.x
-                windowLastPos.y = window.y
             }
             onReleased: {
                 if(window.y < 0){window.y = 0}
@@ -178,8 +190,30 @@ Window {
             }
 
             onPositionChanged: {
-                if(currVisi === Window.Maximized){return}
+                if(currVisi === Window.Maximized){currVisi = Window.Windowed}
                 preMax = window.y + mouse.y == 0
+
+                if(maxToWinRedirect){
+                    var stll = (Screen.desktopAvailableWidth - window.width) / 2
+                    if (mouse.x < stll){
+                        // 靠左上角
+                        window.x = 0
+                        window.y = 0
+                        startPos = Qt.point(maxStartPos.x,maxStartPos.y)
+                    }else if(mouse.x > Screen.desktopAvailableWidth - stll){
+                        // 靠右上角
+                        window.x = Screen.desktopAvailableWidth - window.width
+                        window.y = 0
+                        startPos = Qt.point(window.width - (Screen.desktopAvailableWidth - maxStartPos.x),maxStartPos.y)
+                    }else{
+                        // 中心靠鼠标
+                        window.x = maxStartPos.x - (window.width / 2)
+                        window.y = 0
+                        startPos = Qt.point(window.width / 2,maxStartPos.y)
+                    }
+                    maxToWinRedirect = false
+                    return
+                }
                 offsetPos = Qt.point(mouseX - startPos.x, mouseY - startPos.y)
                 window.x += offsetPos.x
                 window.y += offsetPos.y
@@ -189,11 +223,12 @@ Window {
                 if(currVisi === Window.Windowed){
                     currVisi = Window.Maximized
                 }else{
+                    // 取消掉全屏的拖动处理
+                    maxToWinRedirect = false
                     currVisi = Window.Windowed
                     window.x = windowLastPos.x
                     window.y = windowLastPos.y
                 }
-
             }
         }
     }

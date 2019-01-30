@@ -21,8 +21,8 @@
         <file>ui/ZConfirm.qml</file>
         <file>ui/ZSnackbar.qml</file>
         <file>Home.qml</file>
-        <file>ServiceManager.qml</file>
-        <file>Configuration.qml</file>
+        <file>DatabaseService.qml</file>
+        <file>Database.qml</file>
         <file>ui/ZHref.qml</file>
         <file>Setting.qml</file>
         <file>locales/en_us.qm</file>
@@ -34,5 +34,8 @@
         <file>img/icon.ico</file>
         <file>img/max.svg</file>
         <file>img/min.svg</file>
+        <file>Download.qml</file>
+        <file>Upload.qml</file>
+        <file>ui/ZFileDialog.qml</file>
     </qresource>
 </RCC>

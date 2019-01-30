@@ -39,7 +39,7 @@ Rectangle {
     radius: fullWidth ? 0 : 2
     color: "#cc323232"
     height: 48
-    width: fullWidth ? parent.width : 200
+    width: fullWidth ? parent.width : 250
     opacity: opened ? 1 : 0
 
     Timer {

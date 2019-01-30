@@ -5,7 +5,11 @@ ZText {
     signal zclicked()
     property string zhref: null
     property alias hovered: mouseArea.containsMouse
+    property string toolTip: ""
     color: hovered ? Qt.darker(ZTheme.primaryColor, 1.2) : ZTheme.primaryColor
+    ToolTip.visible:((toolTip != "") && hovered)
+    ToolTip.delay: 200
+    ToolTip.text: toolTip
 
     MouseArea{
         id: mouseArea

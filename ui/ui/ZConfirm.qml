@@ -12,12 +12,17 @@ ZLayer {
     property alias ztext: contentText.text
     property color zbgTitleBottomColor: Qt.rgba(ZTheme.primaryColor.r, ZTheme.primaryColor.g, ZTheme.primaryColor.b, 0.08)
     property bool zshadeClose: true
+//    property Component zbodyComponent: null
+    default property alias zbody: zbodyComponent.data
+
+    property int zwidth: 250
+    property int zheight: 150
 
     Rectangle{
         id: confirmBox
         visible: parent.visible
-        width: 250
-        height: 150
+        width: zwidth
+        height: zheight
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         scale: visible ? 1 : 0.7
@@ -68,6 +73,8 @@ ZLayer {
         }
         Rectangle{
             id: contentRect
+            visible: zbodyComponent.children.length === 0
+
             anchors{
                 top: titleRect.bottom
                 left: parent.left
@@ -83,6 +90,17 @@ ZLayer {
                 text: "确定要点确定吗？"
             }
         }
+//        Loader{
+//            visible: zbodyComponent != null
+//            anchors.fill: contentRect
+//            sourceComponent: zbodyComponent
+//        }
+
+        Item {
+            id: zbodyComponent
+            anchors.fill: contentRect
+        }
+
         Rectangle{
             id: bottomRect
             anchors{
