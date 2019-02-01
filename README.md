@@ -26,11 +26,14 @@ pyinstaller .\package.spec
 #### 启动运行
 ````
 # shell 环境
-pyrcc5 .\ui\qml.qrc -o .\ui\qml_rc.py | python d:/PythonWorkspace/mysql-tool/main.py
+pyrcc5 .\ui\qml.qrc -o .\ui\qml_rc.py | python ./main.py
 ````
 
 #### 可执行程序下载
+##### 1.0下载
 https://github.com/lzx8589561/ZTool/releases/download/F0.0.1/MysqlTool.7z
+##### 2.0下载
+https://github.com/lzx8589561/ZTool/releases/download/V2.0.0/ZTool.7z
 
 ## 预览
 ### 2.0版本预览
