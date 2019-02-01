@@ -39,13 +39,13 @@ Item {
                 setting.top = checked
             }
         }
-//        UI.ZCheckBox{
-//            text: qsTr("开机自启")
-//            checked: setting.autostart
-//            onClicked: {
-//                setting.autostart = checked
-//            }
-//        }
+        UI.ZCheckBox{
+            text: qsTr("开机自启")
+            checked: setting.autostart
+            onClicked: {
+                setting.autostart = checked
+            }
+        }
         UI.ZText{
             text: qsTr("透明度")
             Layout.topMargin: 10

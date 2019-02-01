@@ -20,6 +20,17 @@ UI.ZLessWindow {
 
     property alias showWindow: openAnimation
 
+    Timer{
+        id: timer
+        interval: 100
+        running: false
+        repeat: false
+        onTriggered: {
+            window.ztop = setting.top
+            console.log("top timer execute!")
+        }
+    }
+
     PropertyAnimation{
         id: closeAnimation
         target: window
@@ -44,11 +55,19 @@ UI.ZLessWindow {
     }
 
     Component.onCompleted: {
-        window.raise()
-        window.requestActivate()
-        window.ztop = setting.top
-        openAnimation.start()
-        console.log("qml load complete:" + new Date().getTime())
+        console.log("background:"+setting.background_run)
+        if(setting.background_run){
+            closeAnimation.start()
+            console.log("hide window")
+        }else{
+            window.raise()
+            window.requestActivate()
+            window.ztop = true
+            openAnimation.start()
+            console.log("qml load complete:" + new Date().getTime())
+            timer.start()
+        }
+
     }
 
     SystemTrayIcon {
@@ -63,6 +82,7 @@ UI.ZLessWindow {
                 text: qsTr("退出")
                 onTriggered: {
                     systemIcon.hide()
+                    aria2.stopAria2()
                     Qt.quit()
                 }
             }

@@ -64,6 +64,7 @@ class Aria2(QObject):
 
     def __init__(self, parent=None):
         super().__init__(parent)
+        self.popen = None
         # 启动aria2
         _thread.start_new_thread(self.start_aria2, ())
 
@@ -94,12 +95,22 @@ class Aria2(QObject):
         popen = subprocess.Popen(args,
                                  stdout=subprocess.PIPE,
                                  stderr=subprocess.PIPE,
-                                 bufsize=1,
+                                 # bufsize=1,
                                  creationflags=subprocess.CREATE_NO_WINDOW)
+        self.popen = popen
         # 重定向标准输出 None表示正在执行中
         while popen.poll() is None:
             r = popen.stdout.readline().decode('utf8')
-            logging.debug(r)
+            if r != '\n':
+                logging.debug(r)
+
+    @pyqtSlot(name='stopAria2')
+    def stop_aria2(self):
+        """
+        停止aria2 子进程
+        """
+        if self.popen is not None:
+            self.popen.kill()
 
     @pyqtSlot(str, QVariant, name='addTask')
     def add_task(self, url, options=None):

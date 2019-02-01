@@ -1,4 +1,5 @@
 import os
+import sys
 import winreg
 
 import yaml
@@ -12,7 +13,7 @@ class Setting(QObject):
     软件设置
     """
     yaml_path = os.path.join(common.project_path(), "setting.yaml")
-    program_path = os.path.join(common.project_path(), "ZTool.exe")
+    program_path = sys.argv[0]
     futility_signal = pyqtSignal()
     settings = {
         'autostarts': 1,
@@ -28,6 +29,7 @@ class Setting(QObject):
 
     def __init__(self, parent=None):
         super().__init__(parent)
+        self.background_run_param = False
         exists = os.path.exists(self.yaml_path)
         if not exists:
             self.save_cfg()
@@ -38,6 +40,10 @@ class Setting(QObject):
     def save_cfg(self):
         with open(self.yaml_path, "w", encoding="utf-8") as f:
             yaml.dump(self.settings, f, default_flow_style=False)
+
+    @pyqtProperty(bool, notify=futility_signal)
+    def background_run(self):
+        return self.background_run_param
 
     @pyqtProperty(int, notify=futility_signal)
     def lang(self):
@@ -105,7 +111,7 @@ class Setting(QObject):
         key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\Microsoft\Windows\CurrentVersion\Run",
                              access=winreg.KEY_WRITE)
         if val:
-            winreg.SetValueEx(key, "ZTool", 0, winreg.REG_SZ, self.program_path)
+            winreg.SetValueEx(key, "ZTool", 0, winreg.REG_SZ, '"{0}" background'.format(self.program_path))
         else:
             try:
                 winreg.DeleteValue(key, "ZTool")
