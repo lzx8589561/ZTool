@@ -17,6 +17,7 @@ UI.ZLessWindow {
     ztop: setting.top
     title: "ZTool"
     opacity: 0
+    color: "transparent"
 
     property alias showWindow: openAnimation
 
@@ -120,12 +121,12 @@ UI.ZLessWindow {
         closeAnimation.start()
     }
 
-    Item {
+    Rectangle {
         id: root
         anchors.fill: parent
-        anchors.topMargin: 35
         property string serviceStatus: null
         property string lastServiceStatus: null
+        color: "white"
 
         UI.ZSideMenu{
             id: sideMenu
@@ -161,7 +162,7 @@ UI.ZLessWindow {
                 },
 
             ]
-            //            ["#EB3C00","#2B579A","#217346","#0078D7","#672B7A","#008272"]
+
             zclickedCall: function(index,item){
                 root.currTab = index
                 switch(index){
@@ -192,9 +193,6 @@ UI.ZLessWindow {
 
         property int currTab: 0
 
-
-
-
         Item {
             id: content
             anchors.left: sideMenu.right
@@ -206,13 +204,9 @@ UI.ZLessWindow {
                 id: stackLayout
                 anchors.fill: parent
                 currentIndex: root.currTab
-                Home{
+                Home{}
 
-                }
-
-                Database {
-
-                }
+                Database {}
 
 //                Item{
 //                    WebEngineView {
@@ -221,17 +215,13 @@ UI.ZLessWindow {
 //                    }
 //                }
 
-                Download{
-
-                }
+                Download{}
 
 //                Upload{
 //
 //                }
 
-                Setting{
-
-                }
+                Setting{}
             }
 
         }

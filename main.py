@@ -1,31 +1,12 @@
 import ctypes
+import logging
+import os
 import sys
 import traceback
-import os
-from os.path import abspath, dirname, join, exists
-import logging
-from logging.handlers import TimedRotatingFileHandler
+from os.path import abspath, dirname, join
 import common
-from common import uac_plan_task
 from controller import setting_instance
-
-os.chdir(abspath(dirname(sys.argv[0])))
-
-if not exists('log'):
-    os.mkdir('log')
-formatter = logging.Formatter("%(asctime)s %(levelname)s - %(funcName)s line %(lineno)d : %(message)s")
-logger = logging.getLogger()
-logger.setLevel(logging.DEBUG)
-# 控制台日志
-console_log = logging.StreamHandler()
-console_log.setLevel(logging.DEBUG)
-console_log.setFormatter(formatter)
-logger.addHandler(console_log)
-# 文件日志 按天生成
-file_log = TimedRotatingFileHandler("log/runtime.log", when='D', encoding="utf-8")
-file_log.setLevel(logging.DEBUG)
-file_log.setFormatter(formatter)
-logger.addHandler(file_log)
+from common import uac_plan_task
 
 logging.debug("main params:" + ','.join(sys.argv))
 
@@ -73,8 +54,7 @@ else:
 
 
 def qml_log(type, context, msg):
-    logging.info(
-        "{0} - {1} line {2}:{3}".format(context.file, context.function, context.line, msg))
+    logging.info("{0} - {1} line {2}:{3}".format(context.file, context.function, context.line, msg))
 
 
 if __name__ == '__main__':

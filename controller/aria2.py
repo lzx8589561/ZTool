@@ -91,7 +91,6 @@ class Aria2(QObject):
             args.append('--' + item[0] + '=' + item[1])
 
         args.insert(0, self.aria2_path)
-        print(self.aria2_path)
         popen = subprocess.Popen(args,
                                  stdout=subprocess.PIPE,
                                  stderr=subprocess.PIPE,
@@ -101,8 +100,8 @@ class Aria2(QObject):
         # 重定向标准输出 None表示正在执行中
         while popen.poll() is None:
             r = popen.stdout.readline().decode('utf8')
-            if r != '\n':
-                logging.debug(r)
+            if r.replace('\r', '').replace('\n', '').strip(' ') != '':
+                logging.debug(r.replace('\n', ''))
 
     @pyqtSlot(name='stopAria2')
     def stop_aria2(self):

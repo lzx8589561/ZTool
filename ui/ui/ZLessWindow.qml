@@ -2,6 +2,7 @@ import QtQuick 2.10
 import QtQuick.Window 2.2
 import QtQuick.Controls 2.3
 import QtQuick.Layouts 1.3
+import QtGraphicalEffects 1.0
 
 Window {
     id: window
@@ -20,12 +21,44 @@ Window {
     property string zicon: "qrc:/img/db.svg"
     property int currVisi: Window.Windowed
     property bool fristWindowLoad: true
+    property int shadowWidthOrgin: null
+    property color shadowColorOrgin: null
+    default property alias zbody: zbodyComponent.data
+
     visibility: Window.Windowed
+
+    Component.onCompleted: {
+        shadowWidthOrgin = ZTheme.shadowWidth
+        shadowColorOrgin = ZTheme.shadowColor
+    }
+
     onActiveChanged: {
-        if(active){visibility = currVisi}
+        if(active){visibility = currVisi;ZTheme.shadowColor=shadowColorOrgin;}else{ZTheme.shadowColor="transparent"}
     }
     onCurrVisiChanged: {
+        if(currVisi == Window.Maximized){
+            ZTheme.shadowWidth = 0
+        }else{
+            ZTheme.shadowWidth = shadowWidthOrgin
+        }
         visibility = currVisi
+    }
+
+    Rectangle{
+        id:shadowRect
+        anchors.fill: parent
+        anchors.margins: ZTheme.shadowWidth - 1
+        border.color: ZTheme.primaryColor
+        border.width: 1
+        Behavior on border.color { ColorAnimation {duration: 200} }
+    }
+
+    DropShadow {
+        anchors.fill: shadowRect
+        radius: ZTheme.shadowWidth * 2 - 2
+        samples: 41
+        color: ZTheme.shadowColor
+        source: shadowRect
     }
 
     function savePos(){
@@ -35,12 +68,15 @@ Window {
         id: titleRect
         anchors{
             top: parent.top
+            topMargin: ZTheme.shadowWidth
             left: parent.left
+            leftMargin: ZTheme.shadowWidth
             right: parent.right
+            rightMargin: ZTheme.shadowWidth
         }
 
         height: 35
-
+        z:999
         color: ZTheme.primaryColor
 
         Behavior on color { ColorAnimation {duration: 200} }
@@ -185,13 +221,13 @@ Window {
                 startPos = Qt.point(mouseX , mouseY)
             }
             onReleased: {
-                if(window.y < 0){window.y = 0}
-                if(preMax){currVisi = Window.Maximized;preMax = false}
+                if(window.y < -1 * ZTheme.shadowWidth){window.y = -1 * ZTheme.shadowWidth}
+                if(preMax){ZTheme.shadowWidth = 0;currVisi = Window.Maximized;  preMax = false}
             }
 
             onPositionChanged: {
                 if(currVisi === Window.Maximized){currVisi = Window.Windowed}
-                preMax = window.y + mouse.y == 0
+                preMax = window.y + mouse.y == -1 * ZTheme.shadowWidth
 
                 if(maxToWinRedirect){
                     var stll = (Screen.desktopAvailableWidth - window.width) / 2
@@ -207,8 +243,8 @@ Window {
                         startPos = Qt.point(window.width - (Screen.desktopAvailableWidth - maxStartPos.x),maxStartPos.y)
                     }else{
                         // 中心靠鼠标
-                        window.x = maxStartPos.x - (window.width / 2)
-                        window.y = 0
+                        window.x = maxStartPos.x - (window.width / 2) + -ZTheme.shadowWidth
+                        window.y = -1 * ZTheme.shadowWidth
                         startPos = Qt.point(window.width / 2,maxStartPos.y)
                     }
                     maxToWinRedirect = false
@@ -231,5 +267,13 @@ Window {
                 }
             }
         }
+    }
+    Item {
+        id: zbodyComponent
+        anchors.fill: parent
+        anchors.topMargin: 35 + ZTheme.shadowWidth
+        anchors.leftMargin: ZTheme.shadowWidth
+        anchors.rightMargin: ZTheme.shadowWidth
+        anchors.bottomMargin: ZTheme.shadowWidth
     }
 }
