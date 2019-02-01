@@ -27,7 +27,7 @@ file_log.setLevel(logging.DEBUG)
 file_log.setFormatter(formatter)
 logger.addHandler(file_log)
 
-logging.debug("main params:"+','.join(sys.argv))
+logging.debug("main params:" + ','.join(sys.argv))
 
 # 检查是否有额外参数
 if len(sys.argv) > 1:
@@ -46,7 +46,7 @@ else:
     uac_plan_task.admin_plan()
 
 try:
-    from PyQt5.QtCore import QCoreApplication, Qt, QTranslator
+    from PyQt5.QtCore import QCoreApplication, Qt, QTranslator, qInstallMessageHandler
     from PyQt5.QtGui import QGuiApplication, QIcon
     from PyQt5.QtQml import QQmlApplicationEngine
 
@@ -71,6 +71,12 @@ if sys.argv[0].endswith('.exe'):
 else:
     qml_path_load = True
 
+
+def qml_log(type, context, msg):
+    logging.info(
+        "{0} - {1} line {2}:{3}".format(context.file, context.function, context.line, msg))
+
+
 if __name__ == '__main__':
 
     # dll = ctypes.CDLL('lib/ScreenShot.dll')
@@ -92,6 +98,7 @@ if __name__ == '__main__':
         app.setWindowIcon(
             QIcon(':/img/icon.ico') if not qml_path_load else QIcon(
                 join(dirname(__file__), 'ui', "img", "icon.ico")))
+        qInstallMessageHandler(qml_log)
         engine = QQmlApplicationEngine()
         context = engine.rootContext()
         context.setContextProperty("mysqlServiceManager", mysql_service_manager_instance)
