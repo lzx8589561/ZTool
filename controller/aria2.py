@@ -74,10 +74,9 @@ class Aria2(QObject):
     @pyqtSlot(str, name='openDir')
     def open_dir(self, file_path):
         if file_path.find(':') != -1:
-            path = r'/select,' + abspath(file_path)
+            common.open_dir(abspath(file_path))
         else:
-            path = r'/select,' + abspath(join(common.project_path(), file_path))
-        os.system("explorer.exe %s" % path)
+            common.open_dir(abspath(join(common.project_path(), file_path)))
 
     def start_aria2(self):
         """

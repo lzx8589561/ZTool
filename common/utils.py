@@ -1,7 +1,9 @@
 import ctypes
 import inspect
 import os
+import platform
 import socket
+import subprocess
 import time
 from os.path import dirname
 
@@ -81,3 +83,25 @@ def project_path():
     :return: path
     """
     return dirname(dirname(__file__))
+
+
+def open_dir(path):
+    """
+    打开文件所在目录并定位位置
+    :param path 文件路径
+    """
+    system = platform.system()
+    if system.startswith('Window'):
+        try:
+            ctypes.windll.ole32.CoInitialize(None)
+            pidl = ctypes.windll.shell32.ILCreateFromPathW(path)
+            ctypes.windll.shell32.SHOpenFolderAndSelectItems(pidl, 0, None, 0)
+            ctypes.windll.shell32.ILFree(pidl)
+            ctypes.windll.ole32.CoUninitialize()
+        except Exception:
+            path = os.path.dirname(path)
+            path = path.replace('/', '\\')
+            subprocess.call(['explorer', path])
+    elif system.startswith('Darwin'):
+        path = os.path.dirname(path).replace('\\', '/')
+        subprocess.call(['open', path])

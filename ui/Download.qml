@@ -6,14 +6,6 @@ import QtQuick.Dialogs 1.3
 import "./ui" as UI
 
 Item {
-    Timer{
-        interval: 1000
-        running: true
-        repeat: true
-        onTriggered: {
-            aria2.selTask()
-        }
-    }
     property string zitemBgColor: "white"
     property string zitemHoverBgColor: Qt.rgba(UI.ZTheme.primaryColor.r, UI.ZTheme.primaryColor.g, UI.ZTheme.primaryColor.b, 0.3)
     property string zitemSelectedBgColor: Qt.rgba(UI.ZTheme.primaryColor.r, UI.ZTheme.primaryColor.g, UI.ZTheme.primaryColor.b, 0.4)
@@ -45,6 +37,27 @@ Item {
         "startFail":qsTr("启动失败"),
         "removeSuccess":qsTr("已删除"),
         "removeFail":qsTr("删除失败"),
+    }
+
+    Timer{
+        id:timer
+        interval: 1000
+        running: false
+        repeat: true
+        onTriggered: {
+            aria2.selTask()
+        }
+    }
+    Connections{
+        target: window
+        onVisibleChanged:{
+            if(window.visible){
+                aria2.selTask()
+                timer.start()
+            }else{
+                timer.stop()
+            }
+        }
     }
 
     Component.onCompleted: {
