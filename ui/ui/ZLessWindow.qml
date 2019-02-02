@@ -24,6 +24,7 @@ Window {
     property int shadowWidthOrgin: null
     property color shadowColorOrgin: null
     default property alias zbody: zbodyComponent.data
+    signal zdragWindowSizeChanged()
 
     visibility: Window.Windowed
 
@@ -51,6 +52,36 @@ Window {
         border.color: ZTheme.primaryColor
         border.width: 1
         Behavior on border.color { ColorAnimation {duration: 200} }
+
+        MouseArea{
+            enabled: ZTheme.shadowWidth > 0
+            hoverEnabled: true
+            cursorShape: Qt.SizeFDiagCursor
+            anchors.right: parent.right
+            anchors.rightMargin: -ZTheme.shadowWidth / 2
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: -ZTheme.shadowWidth / 2
+            width: ZTheme.shadowWidth
+            height: width
+            property point startPos: Qt.point(0,0)
+            property point offsetPos: Qt.point(0,0)
+
+            onPressed: startPos = Qt.point(mouseX , mouseY)
+            onPositionChanged: {
+                if(pressed){
+                    offsetPos = Qt.point(mouseX - startPos.x, mouseY - startPos.y)
+                    var afterWidth = window.width + offsetPos.x
+                    var afterHeight = window.height + offsetPos.y
+                    if(afterWidth > window.minimumWidth){
+                        window.width = afterWidth
+                    }
+                    if(afterHeight > window.minimumHeight){
+                        window.height = afterHeight
+                    }
+                }
+            }
+            onReleased: zdragWindowSizeChanged()
+        }
     }
 
     DropShadow {

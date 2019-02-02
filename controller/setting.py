@@ -24,7 +24,9 @@ class Setting(QObject):
         'block_size': 2,
         'init': True,
         'log': True,
-        'autostart': False
+        'autostart': False,
+        'window_width': 850,
+        'window_height': 600,
     }
 
     def __init__(self, parent=None):
@@ -117,6 +119,24 @@ class Setting(QObject):
                 winreg.DeleteValue(key, "ZTool")
             except:
                 pass
+
+    @pyqtProperty(int, notify=futility_signal)
+    def window_width(self):
+        return self.settings['window_width']
+
+    @window_width.setter
+    def window_width(self, val):
+        self.settings['window_width'] = val
+        self.save_cfg()
+
+    @pyqtProperty(int, notify=futility_signal)
+    def window_height(self):
+        return self.settings['window_height']
+
+    @window_height.setter
+    def window_height(self, val):
+        self.settings['window_height'] = val
+        self.save_cfg()
 
 
 setting_instance = Setting()

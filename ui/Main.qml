@@ -10,10 +10,10 @@ import "./ui" as UI
 UI.ZLessWindow {
     id: window
     visible: true
-    width: 850
-    height: 600
-    minimumHeight: 850
-    minimumWidth: 600
+    width: setting.window_width
+    height: setting.window_height
+    minimumWidth: 640
+    minimumHeight: 480
     ztop: setting.top
     title: "ZTool"
     opacity: 0
@@ -69,6 +69,11 @@ UI.ZLessWindow {
             timer.start()
         }
 
+    }
+
+    onZdragWindowSizeChanged: {
+        setting.window_width = window.width
+        setting.window_height = window.height
     }
 
     SystemTrayIcon {

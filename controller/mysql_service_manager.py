@@ -34,11 +34,11 @@ class MysqlServiceManager(QObject):
         """
         安装mysql服务
         """
-        cmd = '{0} --install{1} {2} --defaults-file=\"{3}\"'.format(
+        cmd = '\"{0}\" --install{1} {2} --defaults-file=\"{3}\"'.format(
             join(self.mysql_dir_path, 'bin', self.mysqld_name),
             ('' if self.setting.settings['autostarts'] == 1 else '-manual'), self.setting.settings['service'],
             join(self.mysql_dir_path, 'my.ini'))
-
+        logging.debug('install mysql cmd:{}'.format(cmd))
         tmp = os.popen(cmd).readlines()
         tmp = "".join(tmp).lower()
         if tmp.find('successfully') != -1:
@@ -53,7 +53,9 @@ class MysqlServiceManager(QObject):
         """
         卸载mysql服务
         """
-        cmd = join(self.mysql_dir_path, 'bin', self.mysqld_name) + ' --remove ' + self.setting.settings['service']
+        cmd = '\"{0}\" --remove {1}'.format(join(self.mysql_dir_path, 'bin', self.mysqld_name),
+                                            self.setting.settings['service'])
+        logging.debug('uninstall mysql cmd:{}'.format(cmd))
         tmp = os.popen(cmd).readlines()
         tmp = "".join(tmp).lower()
         if tmp.find('success') != -1:
@@ -78,6 +80,7 @@ class MysqlServiceManager(QObject):
         启动mysql服务
         """
         cmd = 'sc start ' + self.setting.settings['service']
+        logging.debug('start mysql cmd:{}'.format(cmd))
         tmp = os.popen(cmd).readlines()
         tmp = "".join(tmp).lower()
         if tmp.find('start_pending') != -1:
@@ -91,10 +94,10 @@ class MysqlServiceManager(QObject):
         """
         self.kill_progress()
 
-        cmd = '{0} --defaults-file=\"{1}\" --skip-grant-tables'.format(
+        cmd = '\"{0}\" --defaults-file=\"{1}\" --skip-grant-tables'.format(
             join(self.mysql_dir_path, 'bin', self.mysqld_name), join(self.mysql_dir_path, 'my.ini'))
         os.popen(cmd)
-
+        logging.debug('modified mysql password cmd:{}'.format(cmd))
         try_count = 0
         successed = False
         while True:
@@ -113,7 +116,7 @@ class MysqlServiceManager(QObject):
                     self.start_service()
                 break
             except:
-                logging.debug("尝试链接数据库失败")
+                logging.debug("try connect mysql fail")
             if try_count == 3:
                 break
         self.pwdSignal.emit('ok' if successed else 'false')
@@ -124,6 +127,7 @@ class MysqlServiceManager(QObject):
         停止mysql服务
         """
         cmd = 'sc stop ' + self.setting.settings['service']
+        logging.debug('stop mysql cmd:{}'.format(cmd))
         tmp = os.popen(cmd).readlines()
         tmp = "".join(tmp).lower()
         if tmp.find('stop_pending') != -1:
