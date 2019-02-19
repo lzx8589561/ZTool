@@ -20,6 +20,7 @@ class Aria2(QObject):
     taskStateSignal = pyqtSignal(str, QVariant, arguments=['gid', 'process'])
     msgSignal = pyqtSignal(str, arguments=['msg'])
     flagMsgSignal = pyqtSignal(str, str, str, arguments=['msg', 'flag', 'taskId'])
+    aria2StopedSignal = pyqtSignal()
     listenerUrl = pyqtSignal(str, arguments=['url'])
     aria2_path = abspath(join(common.project_path(), 'aria2', 'aria2c.exe'))
     default_config = {
@@ -39,7 +40,7 @@ class Aria2(QObject):
         'max-connection-per-server': '16',
         # 最小文件分片大小, 添加时可指定, 取值范围1M -1024M, 默认:20M
         # 假定size=10M, 文件为20MiB 则使用两个来源下载; 文件为15MiB 则使用一个来源下载
-        'min-split-size': '10M',
+        'min-split-size': '1M',
         # 单个任务最大线程数, 添加时可指定, 默认:5
         'split': '100',
         # 整体上传速度限制, 运行时可修改, 默认:0
@@ -107,8 +108,14 @@ class Aria2(QObject):
         """
         停止aria2 子进程
         """
+        _thread.start_new_thread(self.__stop_aria2, ())
+
+    def __stop_aria2(self):
+        aria2 = Aria2RPC()
+        aria2.saveSession()
         if self.popen is not None:
             self.popen.kill()
+        self.aria2StopedSignal.emit()
 
     @pyqtSlot(str, QVariant, name='addTask')
     def add_task(self, url, options=None):

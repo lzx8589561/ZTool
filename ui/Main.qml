@@ -55,6 +55,13 @@ UI.ZLessWindow {
         }
     }
 
+    Connections{
+        target: aria2
+        onAria2StopedSignal:{
+            Qt.quit()
+        }
+    }
+
     Component.onCompleted: {
         console.log("background:"+setting.background_run)
         if(setting.background_run){
@@ -88,8 +95,8 @@ UI.ZLessWindow {
                 text: qsTr("退出")
                 onTriggered: {
                     systemIcon.hide()
+                    closeAnimation.start()
                     aria2.stopAria2()
-                    Qt.quit()
                 }
             }
         }
