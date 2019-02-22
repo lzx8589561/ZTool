@@ -10,7 +10,7 @@ Item {
     property var fileDialog: null
 
     function fileDialogAccepted(){
-        uploadHandler.start_upload(fileDialog.fileUrls)
+        upload.start_upload(fileDialog.fileUrls)
     }
 
     UI.ZButton {
@@ -35,7 +35,7 @@ Item {
     }
 
     Connections{
-        target: uploadHandler
+        target: upload
         onProcessSignal:{
             // 判断列表数是否相等
             if(listModel.count == process.length){
@@ -76,14 +76,14 @@ Item {
             id: pathTextField
             width: 146
             height: 26
-            text: uploadHandler.path
+            text: upload.path
             anchors.left: parent.left
             anchors.leftMargin: 55
             anchors.top: parent.top
             anchors.topMargin: 8
 
             onTextChanged: {
-                uploadHandler.path = text
+                upload.path = text
             }
         }
     }

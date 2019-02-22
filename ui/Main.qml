@@ -109,14 +109,9 @@ UI.ZLessWindow {
         }
         onActivated: {
             if(reason == SystemTrayIcon.Trigger){
-                if(!window.visible){
-                    window.requestActivate()
-                    window.raise()
-                    openAnimation.start()
-                }else{
-                    closeAnimation.start()
-                }
-
+                window.requestActivate()
+                window.raise()
+                openAnimation.start()
             }
 
         }
