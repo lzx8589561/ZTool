@@ -278,12 +278,15 @@ Item {
 //                    cfgResetConfirm.zopen()
 //                }
 //            }
+
             UI.ZButton{
                 text: qsTr("下载")
                 visible: root.serviceStatus === "notExist" ? true : false
+                enabled: !downloading
                 Layout.maximumWidth:100
                 onClicked: {
                     aria2.addFlagTask("https://pan.ilt.me/mysql.zip","mysql")
+                    downloading = true
                 }
             }
             UI.ZSnackbar{
@@ -300,6 +303,7 @@ Item {
 //            }
         }
     }
+    property bool downloading: false
     property string downTaskId: null
 
     property var qsTrStrings: {
@@ -358,7 +362,8 @@ Item {
         onTaskStateSignal:{
             if(gid === downTaskId){
                 var fileState = process[0]
-                if(fileState.completedLength === fileState.length && !downloaded){
+                console.log(JSON.stringify(fileState))
+                if(fileState.length != 0 && fileState.completedLength === fileState.length && !downloaded){
                     downloaded = true
                     snackbar.open(qsTrStrings["beginUnzip"])
                     selTaskTimer.stop()

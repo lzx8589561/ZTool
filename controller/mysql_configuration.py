@@ -2,6 +2,7 @@ import _thread
 import configparser
 import logging
 import os
+import time
 import zipfile
 from os.path import abspath, join
 
@@ -161,6 +162,18 @@ class MysqlConfiguration(QObject):
     def __unzip(self, src_file, out_dir):
         logging.debug("开始解压")
         zf = zipfile.ZipFile(src_file, 'r')
+
+        # 检查文件是否合并完成
+        for i in range(3):
+            logging.debug("检查是否合并完成，文件路径："+src_file + '.aria3')
+            if not os.path.exists(src_file + '.aria3'):
+                logging.debug("未发现aria2临时文件，跳出开始解压")
+                break
+            if i == 2:
+                logging.debug("解压失败，存在aria2临时文件")
+                return
+            time.sleep(1)
+
         zf.extractall(path=out_dir)
         zf.close()
         logging.debug("解压完成")
