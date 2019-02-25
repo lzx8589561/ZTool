@@ -238,8 +238,8 @@ class Aria2(QObject):
         """
         recent_value = ''
         while True:
-            tmp_value = pyperclip.paste()  # 读取剪切板复制的内容
             try:
+                tmp_value = pyperclip.paste()  # 读取剪切板复制的内容
                 if tmp_value != recent_value:  # 如果检测到剪切板内容有改动，那么就进入文本的修改
                     recent_value = tmp_value
                     if recent_value.startswith('http://') or recent_value.startswith('https://'):
