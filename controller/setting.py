@@ -25,6 +25,8 @@ class Setting(QObject):
         'init': True,
         'log': True,
         'autostart': False,
+        'listenurl': False,
+        'listenkeyboard': False,
         'window_width': 850,
         'window_height': 600,
     }
@@ -90,6 +92,24 @@ class Setting(QObject):
     @top.setter
     def top(self, val):
         self.settings['top'] = val
+        self.save_cfg()
+    
+    @pyqtProperty(bool, notify=futility_signal)
+    def listenurl(self):
+        return self.settings['listenurl']
+
+    @listenurl.setter
+    def listenurl(self, val):
+        self.settings['listenurl'] = val
+        self.save_cfg()
+    
+    @pyqtProperty(bool, notify=futility_signal)
+    def listenkeyboard(self):
+        return self.settings['listenkeyboard']
+
+    @listenkeyboard.setter
+    def listenkeyboard(self, val):
+        self.settings['listenkeyboard'] = val
         self.save_cfg()
 
     @pyqtProperty(bool, notify=futility_signal)

@@ -32,6 +32,21 @@ Item {
             }
         }
         UI.ZCheckBox{
+            text: qsTr("监听下载链接")
+            checked: setting.listenurl
+            onClicked: {
+                setting.listenurl = checked
+            }
+        }
+        UI.ZCheckBox{
+            text: qsTr("监听按键")
+            checked: setting.listenkeyboard
+            onClicked: {
+                setting.listenkeyboard = checked
+                keyboardListener.listener(checked)
+            }
+        }
+        UI.ZCheckBox{
             text: qsTr("窗口置顶")
             checked: setting.top
             onClicked: {

@@ -10,6 +10,7 @@ from PyQt5.QtCore import QObject, pyqtSignal, QVariant, pyqtSlot
 from pyaria2 import Aria2RPC
 
 import common
+from .setting import setting_instance
 
 
 class Aria2(QObject):
@@ -134,6 +135,8 @@ class Aria2(QObject):
         :param url: 文件地址
         :param options: 可选项
         """
+        if flag == 'mysql':
+            url = common.lanzou_download('https://www.lanzous.com/i5kwjsj')
         _thread.start_new_thread(self.__add_task, (url, options, flag))
 
     def __add_task(self, url, options, flag):
@@ -239,6 +242,9 @@ class Aria2(QObject):
         recent_value = ''
         while True:
             try:
+                if not setting_instance.settings['listenurl']:
+                    time.sleep(1)
+                    continue
                 tmp_value = pyperclip.paste()  # 读取剪切板复制的内容
                 if tmp_value != recent_value:  # 如果检测到剪切板内容有改动，那么就进入文本的修改
                     recent_value = tmp_value
@@ -247,7 +253,7 @@ class Aria2(QObject):
                         self.listenerUrl.emit(recent_value)
             except:
                 pass
-            time.sleep(0.1)
+            time.sleep(0.5)
 
 
 aria2_instance = Aria2()

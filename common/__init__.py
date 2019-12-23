@@ -3,6 +3,7 @@ import sys
 from os.path import exists, abspath
 
 from .utils import *
+from .crawler import *
 from logging.handlers import TimedRotatingFileHandler
 
 # 初始化

@@ -285,7 +285,7 @@ Item {
                 enabled: !downloading
                 Layout.maximumWidth:100
                 onClicked: {
-                    aria2.addFlagTask("https://pan.ilt.me/mysql.zip","mysql")
+                    aria2.addFlagTask("","mysql")
                     downloading = true
                 }
             }

@@ -19,6 +19,11 @@ UI.ZLessWindow {
     opacity: 0
     color: "transparent"
 
+    UI.ZSnackbar{
+        id: mainSnackbar
+        parent: root
+    }
+
     property alias showWindow: openAnimation
 
     Timer{
@@ -159,6 +164,14 @@ UI.ZLessWindow {
                     name:qsTr("下载"),
                     fontIcon:UI.ZFontIcon.fa_cloud_download
                 },
+                {
+                    name:qsTr("蓝奏云解析"),
+                    fontIcon:UI.ZFontIcon.fa_cloud
+                },
+                {
+                    name:qsTr("破解"),
+                    fontIcon:UI.ZFontIcon.fa_plug
+                },
 //                {
 //                    name:qsTr("上传"),
 //                    fontIcon:UI.ZFontIcon.fa_cloud_upload
@@ -224,6 +237,8 @@ UI.ZLessWindow {
 
                 Download{}
 
+                LanzouParse{}
+                Crack{}
 //                Upload{
 //
 //                }

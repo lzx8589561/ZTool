@@ -1,3 +1,4 @@
+import _thread
 import ctypes
 import logging
 import os
@@ -7,6 +8,7 @@ from os.path import abspath, dirname, join
 import common
 from controller import setting_instance
 from common import uac_plan_task
+
 
 logging.debug("main params:" + ','.join(sys.argv))
 
@@ -36,7 +38,7 @@ try:
     # from PyQt5.QtWebEngineWidgets import QWebEngineView
 
     from controller import mysql_configuration_instance, mysql_service_manager_instance, QmlLanguage, system_instance, \
-        aria2_instance
+        aria2_instance, lanzou_parse_instance, crack_instance, keyboard_listener_instance
     # noinspection PyUnresolvedReferences
     from ui.qml_rc import *
 except Exception as e:
@@ -58,7 +60,6 @@ def qml_log(type, context, msg):
 
 
 if __name__ == '__main__':
-
     # dll = ctypes.CDLL('lib/ScreenShot.dll')
     # dll.PrScrn()
     logging.debug("main start")
@@ -86,6 +87,9 @@ if __name__ == '__main__':
         context.setContextProperty("system", system_instance)
         context.setContextProperty("setting", setting_instance)
         context.setContextProperty("aria2", aria2_instance)
+        context.setContextProperty("lanzouParse", lanzou_parse_instance)
+        context.setContextProperty("crack", crack_instance)
+        context.setContextProperty("keyboardListener", keyboard_listener_instance)
         # context.setContextProperty("uploadHandler", upload_instance)
 
         # 设置语言 初始化加载

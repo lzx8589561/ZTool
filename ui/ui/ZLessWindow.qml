@@ -23,6 +23,7 @@ Window {
     property bool fristWindowLoad: true
     property int shadowWidthOrgin: null
     property color shadowColorOrgin: null
+    property bool doubleClick: false
     default property alias zbody: zbodyComponent.data
     signal zdragWindowSizeChanged()
 
@@ -233,6 +234,17 @@ Window {
             }
         }
 
+        Timer{
+            id: timer
+            interval: 200
+            running: false
+            repeat: false
+            onTriggered: {
+                doubleClick = false
+                console.log("timer execute!")
+            }
+        }
+
         MouseArea {
             id: dragArea
             anchors.fill: parent
@@ -257,6 +269,8 @@ Window {
             }
 
             onPositionChanged: {
+                // 解决高分屏由于像素抖动双击无法全屏的问题
+                if(doubleClick){return}
                 if(currVisi === Window.Maximized){currVisi = Window.Windowed}
                 preMax = window.y + mouse.y == -1 * ZTheme.shadowWidth
 
@@ -287,9 +301,12 @@ Window {
             }
 
             onDoubleClicked: {
+                doubleClick = true
                 if(currVisi === Window.Windowed){
+                    timer.start()
                     currVisi = Window.Maximized
                 }else{
+                    timer.start()
                     // 取消掉全屏的拖动处理
                     maxToWinRedirect = false
                     currVisi = Window.Windowed

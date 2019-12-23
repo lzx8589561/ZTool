@@ -4,3 +4,6 @@ from .mysql_configuration import mysql_configuration_instance
 from .qml_language import QmlLanguage
 from .setting import setting_instance
 from .system import system_instance
+from .lanzou_parse import lanzou_parse_instance
+from .crack import crack_instance
+from .keyboard_listener import keyboard_listener_instance
