@@ -18,11 +18,11 @@ def lanzou_download(url):
     # 拿到ajax请求脚本
     data = soup.select('body > script')
     # 正则取签名
-    searchObj = re.findall( r'(.*)\'sign\':\'(.*?)\'', data[0].text, re.M|re.I)
+    searchObj = re.findall( r'\tdata(.*)\'sign\':\'(.*?)\'', data[0].text, re.M|re.I)
     # 请求ajax获取跳转地址
-    dowjsonStr = requests.post('https://www.lanzous.com/ajaxm.php',data={'action':'downprocess','sign':searchObj[1][1],'ves':'1'},headers={
+    dowjsonStr = requests.post('https://www.lanzous.com/ajaxm.php',data={'action':'downprocess','sign':searchObj[0][1],'ves':'1'},headers={
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36 Edg/79.0.309.51',
-        'referer': 'https://www.lanzous.com/fn?' + searchObj[1][1],
+        'referer': 'https://www.lanzous.com/fn?' + searchObj[0][1],
         })
     dowjson = json.loads(dowjsonStr.text)
     # 请求跳转地址获取真实地址
