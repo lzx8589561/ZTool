@@ -60,6 +60,8 @@ def qml_log(type, context, msg):
 
 
 if __name__ == '__main__':
+    # dll = ctypes.CDLL('lib/ScreenShot.dll')
+    # dll.PrScrn()
     logging.debug("main start")
     logging.debug("workspace dir:" + os.getcwd())
 
