@@ -172,6 +172,10 @@ UI.ZLessWindow {
                     name:qsTr("破解"),
                     fontIcon:UI.ZFontIcon.fa_plug
                 },
+                {
+                    name:qsTr("Host编辑"),
+                    fontIcon:UI.ZFontIcon.fa_code
+                },
 //                {
 //                    name:qsTr("上传"),
 //                    fontIcon:UI.ZFontIcon.fa_cloud_upload
@@ -205,7 +209,10 @@ UI.ZLessWindow {
                     UI.ZTheme.primaryColor = "#228fbd"
                     break
                 case 6:
-                    UI.ZTheme.primaryColor = "#0e0e0e"
+                    UI.ZTheme.primaryColor = "#ff6a00"
+                    break
+                case 7:
+                    UI.ZTheme.primaryColor = "#FF9966"
                     break
                 }
             }
@@ -239,6 +246,7 @@ UI.ZLessWindow {
 
                 LanzouParse{}
                 Crack{}
+                HostEdit{}
 //                Upload{
 //
 //                }

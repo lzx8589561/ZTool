@@ -393,6 +393,44 @@
     </message>
 </context>
 <context>
+    <name>HostEdit</name>
+    <message>
+        <location filename="../HostEdit.qml" line="11"/>
+        <source>loading...</source>
+        <translation>loading...</translation>
+    </message>
+    <message>
+        <location filename="../HostEdit.qml" line="43"/>
+        <source>剪贴</source>
+        <translation>剪贴</translation>
+    </message>
+    <message>
+        <location filename="../HostEdit.qml" line="47"/>
+        <source>复制</source>
+        <translation>复制</translation>
+    </message>
+    <message>
+        <location filename="../HostEdit.qml" line="51"/>
+        <source>粘贴</source>
+        <translation>粘贴</translation>
+    </message>
+    <message>
+        <location filename="../HostEdit.qml" line="76"/>
+        <source>保存</source>
+        <translation>保存</translation>
+    </message>
+    <message>
+        <location filename="../HostEdit.qml" line="83"/>
+        <source>保存成功</source>
+        <translation>保存成功</translation>
+    </message>
+    <message>
+        <location filename="../HostEdit.qml" line="85"/>
+        <source>保存失败</source>
+        <translation>保存失败</translation>
+    </message>
+</context>
+<context>
     <name>LanzouParse</name>
     <message>
         <location filename="../LanzouParse.qml" line="11"/>
@@ -463,6 +501,11 @@
         <translation>破解</translation>
     </message>
     <message>
+        <location filename="../Main.qml" line="176"/>
+        <source>Host编辑</source>
+        <translation>Host编辑</translation>
+    </message>
+    <message>
         <source>Web</source>
         <translation type="vanished">Web</translation>
     </message>
@@ -476,7 +519,7 @@
         <translation type="vanished">上传</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="180"/>
+        <location filename="../Main.qml" line="184"/>
         <source>设置</source>
         <translation>设置</translation>
     </message>

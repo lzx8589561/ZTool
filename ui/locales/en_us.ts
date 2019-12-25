@@ -393,6 +393,44 @@
     </message>
 </context>
 <context>
+    <name>HostEdit</name>
+    <message>
+        <location filename="../HostEdit.qml" line="11"/>
+        <source>loading...</source>
+        <translation>加载中...</translation>
+    </message>
+    <message>
+        <location filename="../HostEdit.qml" line="43"/>
+        <source>剪贴</source>
+        <translation>Cut</translation>
+    </message>
+    <message>
+        <location filename="../HostEdit.qml" line="47"/>
+        <source>复制</source>
+        <translation>Copy</translation>
+    </message>
+    <message>
+        <location filename="../HostEdit.qml" line="51"/>
+        <source>粘贴</source>
+        <translation>Paste</translation>
+    </message>
+    <message>
+        <location filename="../HostEdit.qml" line="76"/>
+        <source>保存</source>
+        <translation>Save</translation>
+    </message>
+    <message>
+        <location filename="../HostEdit.qml" line="83"/>
+        <source>保存成功</source>
+        <translation>Saved</translation>
+    </message>
+    <message>
+        <location filename="../HostEdit.qml" line="85"/>
+        <source>保存失败</source>
+        <translation>Save fail</translation>
+    </message>
+</context>
+<context>
     <name>LanzouParse</name>
     <message>
         <location filename="../LanzouParse.qml" line="11"/>
@@ -455,12 +493,17 @@
     <message>
         <location filename="../Main.qml" line="168"/>
         <source>蓝奏云解析</source>
-        <translation>Lanzou Parse</translation>
+        <translation>Lanzou parse</translation>
     </message>
     <message>
         <location filename="../Main.qml" line="172"/>
         <source>破解</source>
         <translation>Crack</translation>
+    </message>
+    <message>
+        <location filename="../Main.qml" line="176"/>
+        <source>Host编辑</source>
+        <translation>Host edit</translation>
     </message>
     <message>
         <source>Web</source>
@@ -476,7 +519,7 @@
         <translation type="vanished">Upload</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="180"/>
+        <location filename="../Main.qml" line="184"/>
         <source>设置</source>
         <translation>Setting</translation>
     </message>
