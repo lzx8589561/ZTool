@@ -59,14 +59,7 @@ UI.ZLessWindow {
             window.show()
         }
     }
-
-    Connections{
-        target: aria2
-        onAria2StopedSignal:{
-            Qt.quit()
-        }
-    }
-
+    
     Component.onCompleted: {
         console.log("background:"+setting.background_run)
         if(setting.background_run){
@@ -88,14 +81,51 @@ UI.ZLessWindow {
         setting.window_height = window.height
     }
 
+    property var proxyMode: setting.proxy_mode
+
     SystemTrayIcon {
         id: systemIcon
         tooltip: window.title
         visible: true
         iconSource: "qrc:/img/icon.ico"
-
+        // parent: Qt::Desktop
 
         menu: Menu {
+            
+            MenuItem {
+                text: qsTr("全局代理")
+                checkable: true
+                checked: proxyMode == 'ProxyOnly'
+                onTriggered: {
+                    if(!checked){
+                        setting.proxy_mode = 'ProxyOnly'
+                        V2rayManager.start()
+                    }else{
+                        setting.proxy_mode = 'Off'
+                        V2rayManager.stop()
+                    }
+                }
+            }
+            MenuItem {
+                text: qsTr("PAC")
+                checkable: true
+                checked: proxyMode == 'PacOnly'
+                onTriggered: {
+                    if(!checked){
+                        setting.proxy_mode = 'PacOnly'
+                        V2rayManager.start()
+                    }else{
+                        setting.proxy_mode = 'Off'
+                        V2rayManager.stop()
+                    }
+                }
+            }
+            MenuItem {
+                text: qsTr("取消")
+                onTriggered: {
+                    
+                }
+            }
             MenuItem {
                 text: qsTr("退出")
                 onTriggered: {
@@ -139,6 +169,7 @@ UI.ZLessWindow {
         property string serviceStatus: null
         property string lastServiceStatus: null
         color: "white"
+        signal langChangeSignal()
 
         UI.ZSideMenu{
             id: sideMenu
@@ -147,6 +178,9 @@ UI.ZLessWindow {
             anchors.left: parent.left
             anchors.bottom: parent.bottom
             width: 150
+            Behavior on width {
+                NumberAnimation { duration: 200; easing.type: Easing.OutQuad }
+            }
             zmodel:[
                 {
                     name:qsTr("主页"),
@@ -175,6 +209,10 @@ UI.ZLessWindow {
                 {
                     name:qsTr("Host编辑"),
                     fontIcon:UI.ZFontIcon.fa_code
+                },
+                {
+                    name:qsTr("V2ray"),
+                    fontIcon:UI.ZFontIcon.fa_paper_plane
                 },
 //                {
 //                    name:qsTr("上传"),
@@ -209,11 +247,52 @@ UI.ZLessWindow {
                     UI.ZTheme.primaryColor = "#228fbd"
                     break
                 case 6:
-                    UI.ZTheme.primaryColor = "#ff6a00"
+                    UI.ZTheme.primaryColor = "#EC7357"
                     break
                 case 7:
-                    UI.ZTheme.primaryColor = "#FF9966"
+                    UI.ZTheme.primaryColor = "#ff6a00"
                     break
+                }
+            }
+        }
+
+        Rectangle{
+            id: closeRect
+            color: UI.ZTheme.primaryColor
+            width: 15
+            height:40
+            anchors.top: sideMenu.top
+            anchors.topMargin: (sideMenu.height - height) / 2
+            anchors.right: sideMenu.right
+            anchors.rightMargin: 0
+            opacity: 0.7
+            z: 9999
+            Behavior on anchors.rightMargin {
+                NumberAnimation { duration: 200; easing.type: Easing.OutQuad }
+            }
+            MouseArea{
+                anchors.fill: parent
+                onClicked: {
+                    if(sideMenu.width === 0){
+                        sideMenu.width = 150
+                        closeRect.anchors.rightMargin = 0
+                    }else{
+                        sideMenu.width = 0
+                        closeRect.anchors.rightMargin = -15
+                    }
+                }
+            }
+            UI.ZText{
+                id: fontIconText
+                font.pixelSize: 10
+                text: UI.ZFontIcon.fa_outdent
+                font.family: UI.ZFontIcon.fontFontAwesome.name
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+                color: 'white'
+                rotation: sideMenu.width === 0 ? 180 : 0
+                Behavior on rotation {
+                    NumberAnimation { duration: 200; easing.type: Easing.OutQuad }
                 }
             }
         }
@@ -250,10 +329,30 @@ UI.ZLessWindow {
 //                Upload{
 //
 //                }
-
+                V2ray{}
                 Setting{}
             }
 
+        }
+    }
+    Connections{
+        target: V2rayManager
+        onStartedSignal:{
+            proxyMode = setting.proxy_mode
+        }
+        onStopedSignal:{
+            proxyMode = setting.proxy_mode
+        }
+        onQuitedSignal:{
+            Qt.quit()
+        }
+    }
+
+    Connections{
+        target: aria2
+        onAria2StopedSignal:{
+            // 退出aria2后退出v2ray
+            V2rayManager.quit()
         }
     }
 }

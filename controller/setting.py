@@ -29,6 +29,8 @@ class Setting(QObject):
         'listenkeyboard': False,
         'window_width': 850,
         'window_height': 600,
+        'proxy_mode': 'Off',
+        'proxy_node': None,
     }
 
     def __init__(self, parent=None):
@@ -134,9 +136,11 @@ class Setting(QObject):
                              access=winreg.KEY_WRITE)
         if val:
             winreg.SetValueEx(key, "ZTool", 0, winreg.REG_SZ, '"{0}" background'.format(self.program_path))
+            key.Close()
         else:
             try:
                 winreg.DeleteValue(key, "ZTool")
+                key.Close()
             except:
                 pass
 
@@ -156,6 +160,32 @@ class Setting(QObject):
     @window_height.setter
     def window_height(self, val):
         self.settings['window_height'] = val
+        self.save_cfg()
+
+    @pyqtProperty(str, notify=futility_signal)
+    def proxy_mode(self):
+        return self.settings['proxy_mode']
+
+    @proxy_mode.setter
+    def proxy_mode(self, val):
+        self.settings['proxy_mode'] = val
+        self.save_cfg()
+    
+    def set_proxy_mode(self, val):
+        self.settings['proxy_mode'] = val
+        self.save_cfg()
+    
+    @pyqtProperty(str, notify=futility_signal)
+    def proxy_node(self):
+        return self.settings['proxy_node']
+
+    @proxy_node.setter
+    def proxy_node(self, val):
+        self.settings['proxy_node'] = val
+        self.save_cfg()
+        
+    def set_proxy_node(self, val):
+        self.settings['proxy_node'] = val
         self.save_cfg()
 
 

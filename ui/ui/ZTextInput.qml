@@ -7,6 +7,36 @@ TextField {
     font.family: ZTheme.fontFamily
     width: 150
     height: 30
+    selectByMouse: true
+
+    MouseArea {
+        anchors.fill: parent
+        acceptedButtons: Qt.RightButton
+        cursorShape: Qt.IBeamCursor
+        onClicked: {
+            if (mouse.button === Qt.RightButton)
+                var start = control.selectionStart
+                var end = control.selectionEnd
+                contextMenu.popup()
+                control.select(start,end)
+        }
+
+        Menu {
+            id: contextMenu
+            MenuItem {
+                text: qsTr("剪贴")
+                onTriggered: control.cut()
+            }
+            MenuItem { 
+                text: qsTr("复制")
+                onTriggered: control.copy()
+            }
+            MenuItem { 
+                text: qsTr("粘贴")
+                onTriggered: control.paste()
+            }
+        }
+    }
 
     background: Rectangle {
         implicitWidth: parent.width

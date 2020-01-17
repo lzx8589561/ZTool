@@ -4,6 +4,8 @@ from os.path import exists, abspath
 
 from .utils import *
 from .crawler import *
+from .uac_plan_task import *
+from .v2ray_config_template import conf_template as tpl
 from logging.handlers import TimedRotatingFileHandler
 
 # 初始化

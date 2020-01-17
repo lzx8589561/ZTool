@@ -29,6 +29,7 @@ Item {
             onZitemClicked: {
                 setting.lang = currentIndex
                 lang.setLanguage(currentIndex)
+                root.langChangeSignal()
             }
         }
         UI.ZCheckBox{

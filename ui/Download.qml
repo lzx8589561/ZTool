@@ -81,6 +81,7 @@ Item {
         parent: root
         zwidth: 500
         zheight: 300
+        z: 99999
         property string downloadUrl: ""
 
         Rectangle {

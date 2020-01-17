@@ -304,52 +304,52 @@
         <translation>删除失败</translation>
     </message>
     <message>
-        <location filename="../Download.qml" line="93"/>
+        <location filename="../Download.qml" line="94"/>
         <source>下载地址</source>
         <translation>下载地址</translation>
     </message>
     <message>
-        <location filename="../Download.qml" line="103"/>
+        <location filename="../Download.qml" line="104"/>
         <source>启用线程</source>
         <translation>启用线程</translation>
     </message>
     <message>
-        <location filename="../Download.qml" line="111"/>
+        <location filename="../Download.qml" line="112"/>
         <source>保存路径</source>
         <translation>保存路径</translation>
     </message>
     <message>
-        <location filename="../Download.qml" line="114"/>
+        <location filename="../Download.qml" line="115"/>
         <source>选择文件夹</source>
         <translation>选择文件夹</translation>
     </message>
     <message>
-        <location filename="../Download.qml" line="156"/>
+        <location filename="../Download.qml" line="157"/>
         <source>添加任务</source>
         <translation>添加任务</translation>
     </message>
     <message>
-        <location filename="../Download.qml" line="164"/>
+        <location filename="../Download.qml" line="165"/>
         <source>开始任务</source>
         <translation>开始任务</translation>
     </message>
     <message>
-        <location filename="../Download.qml" line="173"/>
+        <location filename="../Download.qml" line="174"/>
         <source>暂停任务</source>
         <translation>暂停任务</translation>
     </message>
     <message>
-        <location filename="../Download.qml" line="182"/>
+        <location filename="../Download.qml" line="183"/>
         <source>删除任务</source>
         <translation>删除任务</translation>
     </message>
     <message>
-        <location filename="../Download.qml" line="191"/>
+        <location filename="../Download.qml" line="192"/>
         <source>打开文件夹</source>
         <translation>打开文件夹</translation>
     </message>
     <message>
-        <location filename="../Download.qml" line="195"/>
+        <location filename="../Download.qml" line="196"/>
         <source>无法获取路径</source>
         <translation>无法获取路径</translation>
     </message>
@@ -400,32 +400,32 @@
         <translation>loading...</translation>
     </message>
     <message>
-        <location filename="../HostEdit.qml" line="43"/>
+        <location filename="../HostEdit.qml" line="44"/>
         <source>剪贴</source>
         <translation>剪贴</translation>
     </message>
     <message>
-        <location filename="../HostEdit.qml" line="47"/>
+        <location filename="../HostEdit.qml" line="48"/>
         <source>复制</source>
         <translation>复制</translation>
     </message>
     <message>
-        <location filename="../HostEdit.qml" line="51"/>
+        <location filename="../HostEdit.qml" line="52"/>
         <source>粘贴</source>
         <translation>粘贴</translation>
     </message>
     <message>
-        <location filename="../HostEdit.qml" line="76"/>
+        <location filename="../HostEdit.qml" line="77"/>
         <source>保存</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../HostEdit.qml" line="83"/>
+        <location filename="../HostEdit.qml" line="84"/>
         <source>保存成功</source>
         <translation>保存成功</translation>
     </message>
     <message>
-        <location filename="../HostEdit.qml" line="85"/>
+        <location filename="../HostEdit.qml" line="86"/>
         <source>保存失败</source>
         <translation>保存失败</translation>
     </message>
@@ -476,41 +476,61 @@
 <context>
     <name>Main</name>
     <message>
-        <location filename="../Main.qml" line="100"/>
+        <location filename="../Main.qml" line="96"/>
+        <source>全局代理</source>
+        <translation>全局代理</translation>
+    </message>
+    <message>
+        <location filename="../Main.qml" line="110"/>
+        <source>PAC</source>
+        <translation>PAC</translation>
+    </message>
+    <message>
+        <location filename="../Main.qml" line="124"/>
+        <source>取消</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <location filename="../Main.qml" line="130"/>
         <source>退出</source>
         <translation>退出</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="152"/>
+        <location filename="../Main.qml" line="185"/>
         <source>主页</source>
         <translation>主页</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="156"/>
+        <location filename="../Main.qml" line="189"/>
         <source>数据库</source>
         <translation>数据库</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="168"/>
+        <location filename="../Main.qml" line="201"/>
         <source>蓝奏云解析</source>
         <translation>蓝奏云解析</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="172"/>
+        <location filename="../Main.qml" line="205"/>
         <source>破解</source>
         <translation>破解</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="176"/>
+        <location filename="../Main.qml" line="209"/>
         <source>Host编辑</source>
         <translation>Host编辑</translation>
+    </message>
+    <message>
+        <location filename="../Main.qml" line="213"/>
+        <source>V2ray</source>
+        <translation></translation>
     </message>
     <message>
         <source>Web</source>
         <translation type="vanished">Web</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="164"/>
+        <location filename="../Main.qml" line="197"/>
         <source>下载</source>
         <translation>下载</translation>
     </message>
@@ -519,7 +539,7 @@
         <translation type="vanished">上传</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="184"/>
+        <location filename="../Main.qml" line="221"/>
         <source>设置</source>
         <translation>设置</translation>
     </message>
@@ -568,6 +588,174 @@
         <location filename="../Upload.qml" line="68"/>
         <source>远程路径</source>
         <translation>远程路径</translation>
+    </message>
+</context>
+<context>
+    <name>V2ray</name>
+    <message>
+        <location filename="../V2ray.qml" line="15"/>
+        <source>loading...</source>
+        <translation>loading...</translation>
+    </message>
+    <message>
+        <location filename="../V2ray.qml" line="31"/>
+        <source>编辑节点</source>
+        <translation>编辑节点</translation>
+    </message>
+    <message>
+        <location filename="../V2ray.qml" line="79"/>
+        <source>别名</source>
+        <translation>别名</translation>
+    </message>
+    <message>
+        <location filename="../V2ray.qml" line="95"/>
+        <source>地址</source>
+        <translation>地址</translation>
+    </message>
+    <message>
+        <location filename="../V2ray.qml" line="112"/>
+        <source>端口</source>
+        <translation>端口</translation>
+    </message>
+    <message>
+        <location filename="../V2ray.qml" line="127"/>
+        <source>用户ID</source>
+        <translation>用户ID</translation>
+    </message>
+    <message>
+        <location filename="../V2ray.qml" line="142"/>
+        <source>额外ID</source>
+        <translation>额外ID</translation>
+    </message>
+    <message>
+        <location filename="../V2ray.qml" line="157"/>
+        <source>加密方式</source>
+        <translation>加密方式</translation>
+    </message>
+    <message>
+        <location filename="../V2ray.qml" line="176"/>
+        <source>传输协议</source>
+        <translation>传输协议</translation>
+    </message>
+    <message>
+        <location filename="../V2ray.qml" line="194"/>
+        <source>伪装域名</source>
+        <translation>伪装域名</translation>
+    </message>
+    <message>
+        <location filename="../V2ray.qml" line="209"/>
+        <source>路径</source>
+        <translation>路径</translation>
+    </message>
+    <message>
+        <location filename="../V2ray.qml" line="224"/>
+        <source>TLS</source>
+        <translation>TLS</translation>
+    </message>
+    <message>
+        <location filename="../V2ray.qml" line="257"/>
+        <source>修改成功</source>
+        <translation>修改成功</translation>
+    </message>
+    <message>
+        <location filename="../V2ray.qml" line="299"/>
+        <source>名称：</source>
+        <translation>名称：</translation>
+    </message>
+    <message>
+        <location filename="../V2ray.qml" line="314"/>
+        <source>协议：</source>
+        <translation>协议：</translation>
+    </message>
+    <message>
+        <location filename="../V2ray.qml" line="329"/>
+        <source>地址：</source>
+        <translation>地址：</translation>
+    </message>
+    <message>
+        <location filename="../V2ray.qml" line="337"/>
+        <source>启用</source>
+        <translation>启用</translation>
+    </message>
+    <message>
+        <location filename="../V2ray.qml" line="350"/>
+        <source>切换成功，正在重启</source>
+        <translation>切换成功，正在重启</translation>
+    </message>
+    <message>
+        <location filename="../V2ray.qml" line="357"/>
+        <source>编辑</source>
+        <translation>编辑</translation>
+    </message>
+    <message>
+        <location filename="../V2ray.qml" line="377"/>
+        <source>删除</source>
+        <translation>删除</translation>
+    </message>
+    <message>
+        <location filename="../V2ray.qml" line="387"/>
+        <source>不能删除当前节点</source>
+        <translation>不能删除当前节点</translation>
+    </message>
+    <message>
+        <location filename="../V2ray.qml" line="457"/>
+        <source>复制</source>
+        <translation>复制</translation>
+    </message>
+    <message>
+        <location filename="../V2ray.qml" line="492"/>
+        <source>全局代理</source>
+        <translation>全局代理</translation>
+    </message>
+    <message>
+        <location filename="../V2ray.qml" line="509"/>
+        <source>PAC</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../V2ray.qml" line="514"/>
+        <source>PAC异常，请先更新PAC</source>
+        <translation>PAC异常，请先更新PAC</translation>
+    </message>
+    <message>
+        <location filename="../V2ray.qml" line="530"/>
+        <source>剪贴板导入</source>
+        <translation>剪贴板导入</translation>
+    </message>
+    <message>
+        <location filename="../V2ray.qml" line="547"/>
+        <source>PAC更新</source>
+        <translation>PAC更新</translation>
+    </message>
+    <message>
+        <location filename="../V2ray.qml" line="471"/>
+        <source>更新PAC成功</source>
+        <translation>更新PAC成功</translation>
+    </message>
+    <message>
+        <location filename="../V2ray.qml" line="472"/>
+        <source>更新失败，请在代理开启后更新</source>
+        <translation>更新失败，请在代理开启后更新</translation>
+    </message>
+    <message>
+        <location filename="../V2ray.qml" line="465"/>
+        <source>解析成功，请重启代理</source>
+        <translation>解析成功，请重启代理</translation>
+    </message>
+    <message>
+        <location filename="../V2ray.qml" line="466"/>
+        <source>无法解析的链接格式</source>
+        <translation>无法解析的链接格式</translation>
+    </message>
+    <message>
+        <location filename="../V2ray.qml" line="467"/>
+        <source>解析失败</source>
+        <translation>解析失败</translation>
+    </message>
+    <message>
+        <location filename="../V2ray.qml" line="468"/>
+        <source>不支持的协议类型</source>
+        <translation>不支持的协议类型</translation>
     </message>
 </context>
 <context>

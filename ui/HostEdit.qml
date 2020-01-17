@@ -23,6 +23,7 @@ Item {
             selectByMouse: true
             antialiasing: true
             font.pixelSize: 10
+            font.family:"arial"
             text: hostEdit.read()
 
             MouseArea {
