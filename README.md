@@ -51,6 +51,9 @@ https://github.com/lzx8589561/ZTool/releases/download/V2.0.0/ZTool.7z
 ![预览图](preview/9.png)
 ![预览图](preview/10.png)
 ![预览图](preview/11.png)
+![预览图](preview/12.png)
+![预览图](preview/13.png)
+![预览图](preview/14.png)
 
 ### 1.0版本预览 源码到release下载
 ![预览图](preview/demo.gif)
