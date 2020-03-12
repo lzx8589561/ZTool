@@ -437,7 +437,9 @@ Item {
             font.family:"arial"
             text: ""
             width: sview.width
+            readOnly: true
             wrapMode: TextEdit.Wrap
+            selectionColor: "#EC7357"
 
             MouseArea {
                 anchors.fill: parent
@@ -456,6 +458,10 @@ Item {
                     MenuItem { 
                         text: qsTr("复制")
                         onTriggered: textArea.copy()
+                    }
+                    MenuItem { 
+                        text: qsTr("Clear")
+                        onTriggered: textArea.clear()
                     }
                 }
             }
@@ -555,13 +561,16 @@ Item {
     Connections{
         target: V2rayManager
         onV2rayLogSignal:{
+            if(textArea.lineCount > 500){
+                //textArea.remove(0, textArea.text.indexOf("\n") + 1)
+                textArea.clear()
+            }
             if(sview.contentY >= sview.contentHeight - sview.height){
                 textArea.append(log)
                 sview.contentY = sview.contentHeight > sview.height ? sview.contentHeight - sview.height : 0
             }else{
                 textArea.append(log)
             }
-            
         }
         onStartedSignal:{
             proxyMode = setting.proxy_mode

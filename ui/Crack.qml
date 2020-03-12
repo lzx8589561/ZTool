@@ -34,5 +34,16 @@ Item {
                 mainSnackbar.open(qsTr("破解完成"))
             }
         }
+
+        UI.ZText{
+            text: qsTr("Chrome 崩溃")
+        }
+        UI.ZButton{
+            text: qsTr("修复")
+            onClicked: {
+                crack.chromeRendererCodeIntegrityEnabled()
+                mainSnackbar.open(qsTr("修复完成"))
+            }
+        }
     }
 }

@@ -20,5 +20,22 @@ class Crack(QObject):
             winreg.DeleteValue(key, "CacheID")
         except:
             pass
+    
+    @pyqtSlot(name='chromeRendererCodeIntegrityEnabled')
+    def chromeRendererCodeIntegrityEnabled(self):
+        try:
+            key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"Software\Policies",
+                            access=winreg.KEY_WRITE)
+            try:
+                winreg.CreateKey(key, r"Google\Chrome")
+            except:
+                pass
+
+            key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"Software\Policies\Google\Chrome",
+                            access=winreg.KEY_WRITE)
+            winreg.SetValueEx(key, "RendererCodeIntegrityEnabled", 0, winreg.REG_DWORD, 0)
+            key.Close()
+        except:
+            pass
 
 crack_instance = Crack()
