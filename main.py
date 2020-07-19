@@ -38,7 +38,7 @@ try:
     # from PyQt5.QtWebEngineWidgets import QWebEngineView
 
     from controller import mysql_configuration_instance, mysql_service_manager_instance, QmlLanguage, system_instance, \
-        aria2_instance, lanzou_parse_instance, crack_instance, keyboard_listener_instance, host_edit_instance, v2ray_instance
+        aria2_instance, lanzou_parse_instance, sina_t_instance, crack_instance, keyboard_listener_instance, host_edit_instance, v2ray_instance
     # noinspection PyUnresolvedReferences
     from ui.qml_rc import *
 except Exception as e:
@@ -88,6 +88,7 @@ if __name__ == '__main__':
         context.setContextProperty("setting", setting_instance)
         context.setContextProperty("aria2", aria2_instance)
         context.setContextProperty("lanzouParse", lanzou_parse_instance)
+        context.setContextProperty("sinaT", sina_t_instance)
         context.setContextProperty("crack", crack_instance)
         context.setContextProperty("keyboardListener", keyboard_listener_instance)
         context.setContextProperty("hostEdit", host_edit_instance)

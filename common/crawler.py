@@ -18,12 +18,13 @@ def lanzou_download(url):
     # 拿到ajax请求脚本
     data = soup.select('body > script')
     # 正则取签名
-    sg_var = re.findall( r'\tvar sg = \'(.*)\';', data[0].text, re.M|re.I)
+    print(data[0].string)
+    sg_var = re.findall( r'\tvar ajaxup = \'(.*)\';', data[0].string, re.M|re.I)
 
     if len(sg_var) > 0:
         sg = sg_var[0]
     else:
-        searchObj = re.findall( r'\tdata(.*)\'sign\':\'(.*?)\'', data[0].text, re.M|re.I)
+        searchObj = re.findall( r'\tdata(.*)\'sign\':\'(.*?)\'', data[0].string, re.M|re.I)
         sg = searchObj[0][1]
     # 请求ajax获取跳转地址
     dowjsonStr = requests.post('https://www.lanzous.com/ajaxm.php',data={'action':'downprocess','sign':sg,'ves':'1'},headers={

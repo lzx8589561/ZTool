@@ -203,6 +203,10 @@ UI.ZLessWindow {
                     fontIcon:UI.ZFontIcon.fa_cloud
                 },
                 {
+                    name:qsTr("短链生成"),
+                    fontIcon:UI.ZFontIcon.fa_sort_amount_desc
+                },
+                {
                     name:qsTr("破解"),
                     fontIcon:UI.ZFontIcon.fa_plug
                 },
@@ -324,6 +328,7 @@ UI.ZLessWindow {
                 Download{}
 
                 LanzouParse{}
+                SinaT{}
                 Crack{}
                 HostEdit{}
 //                Upload{

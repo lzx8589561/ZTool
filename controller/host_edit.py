@@ -2,6 +2,8 @@ import _thread
 import logging
 import os
 import time
+import traceback
+import stat
 from os.path import abspath, join
 
 import pyperclip
@@ -24,10 +26,12 @@ class HostEdit(QObject):
     @pyqtSlot(str,result=str,name='write')
     def write(self, content):
         try:
+            os.chmod("C:/Windows/System32/drivers/etc/hosts", stat.S_IWRITE )
             f = open("C:/Windows/System32/drivers/etc/hosts",'w')
             f.write(content)
             f.close()
-        except:
+        except Exception as e:
+            traceback.print_exc()
             return 'error'
         return 'success'
 
