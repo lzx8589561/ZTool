@@ -8,6 +8,10 @@ V2ray Windows 客户端 快速配置，链接导入，PAC、全局代理
 - Mysql快速启动 / 密码修改，无需原始密码 / 快捷可视化配置
 - V2ray 客户端
 - Aria2 下载
+- Host编辑
+- 短链接生成
+- 蓝奏云解析
+- 微信机器人（时间调度自动发送消息）
 - 多语言热切换
 ## 技术栈
 - IDE：PyCharm + Qt creator
@@ -54,6 +58,9 @@ https://github.com/lzx8589561/ZTool/releases/download/V2.0.0/ZTool.7z
 ![预览图](preview/12.png)
 ![预览图](preview/13.png)
 ![预览图](preview/14.png)
+![预览图](preview/15.png)
+![预览图](preview/16.png)
+![预览图](preview/17.png)
 
 ### 1.0版本预览 源码到release下载
 ![预览图](preview/demo.gif)
