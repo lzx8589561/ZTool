@@ -41,6 +41,7 @@
         <file>HostEdit.qml</file>
         <file>V2ray.qml</file>
         <file>Upload.qml</file>
+        <file>Wechat.qml</file>
         <file>ui/ZFileDialog.qml</file>
     </qresource>
 </RCC>

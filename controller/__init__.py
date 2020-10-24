@@ -10,3 +10,4 @@ from .crack import crack_instance
 from .keyboard_listener import keyboard_listener_instance
 from .host_edit import host_edit_instance
 from .v2ray import v2ray_instance
+from .wechat import wechat_instance

@@ -218,6 +218,10 @@ UI.ZLessWindow {
                     name:qsTr("V2ray"),
                     fontIcon:UI.ZFontIcon.fa_paper_plane
                 },
+                {
+                    name:qsTr("微信机器人"),
+                    fontIcon:UI.ZFontIcon.fa_wechat
+                },
 //                {
 //                    name:qsTr("上传"),
 //                    fontIcon:UI.ZFontIcon.fa_cloud_upload
@@ -335,6 +339,7 @@ UI.ZLessWindow {
 //
 //                }
                 V2ray{}
+                Wechat{}
                 Setting{}
             }
 

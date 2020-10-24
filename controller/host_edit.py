@@ -19,7 +19,7 @@ class HostEdit(QObject):
 
     @pyqtSlot(result=str,name='read')
     def parse(self):
-        f = open("C:/Windows/System32/drivers/etc/hosts",'r')
+        f = open("C:/Windows/System32/drivers/etc/hosts",'r', encoding='utf-8')
         content = f.read()
         return content
 
@@ -27,7 +27,7 @@ class HostEdit(QObject):
     def write(self, content):
         try:
             os.chmod("C:/Windows/System32/drivers/etc/hosts", stat.S_IWRITE )
-            f = open("C:/Windows/System32/drivers/etc/hosts",'w')
+            f = open("C:/Windows/System32/drivers/etc/hosts",'w', encoding='utf-8')
             f.write(content)
             f.close()
         except Exception as e:

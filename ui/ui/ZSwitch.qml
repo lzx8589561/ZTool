@@ -6,8 +6,8 @@ Switch {
 //    text: qsTr("Switch")
 
     indicator: Rectangle {
-        implicitWidth: 48
-        implicitHeight: 26
+        implicitWidth: implicitHeight * 1.8
+        implicitHeight: 20
         x: control.leftPadding
         y: parent.height / 2 - height / 2
         radius: height / 2
@@ -16,9 +16,9 @@ Switch {
 
         Rectangle {
             x: control.checked ? parent.width - width : 0
-            width: 26
-            height: 26
-            radius: 13
+            width: parent.implicitHeight
+            height: parent.implicitHeight
+            radius: parent.implicitHeight / 2
             color: control.down ? "#cccccc" : "#ffffff"
             border.color: control.checked ? (control.down ? Qt.darker(ZTheme.primaryColor, 1.1) : ZTheme.primaryColor) : "#999999"
             Behavior on x {

@@ -12,6 +12,7 @@ Button {
     property string zfontColor: styles[style].fontColor
     property alias zcontentItem: control.contentItem
     property alias zbackgroundItem: control.background
+    property alias zfontSize: contentItem.font.pixelSize
 
     property var styles: {
         "default":{

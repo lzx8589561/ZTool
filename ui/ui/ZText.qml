@@ -2,7 +2,7 @@ import QtQuick 2.10
 import QtQuick.Controls 2.3
 
 Text {
-    text: "Content"
+    text: ""
     font.pixelSize: styles[style].size
     font.family: ZTheme.fontFamily
     font.bold: styles[style].bold
