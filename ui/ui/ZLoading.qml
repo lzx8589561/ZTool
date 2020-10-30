@@ -38,8 +38,8 @@ ZLayer {
 
             Connections {
                 target: canvas
-                onColorChanged: canvas.requestPaint()
-                onSpinnerWidthChanged: canvas.requestPaint()
+                function onColorChanged(){canvas.requestPaint()}
+                function onSpinnerWidthChanged(){canvas.requestPaint()}
             }
 
             QtObject {

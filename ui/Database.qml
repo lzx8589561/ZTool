@@ -48,9 +48,6 @@ Item {
                     UI.ZComboBox{
                         id: default_storage_engine
                         model: ["INNODB", "MyISAM"]
-                        Component.onCompleted: {
-                            currentIndex = find(mysqlConfiguration.default_storage_engine)
-                        }
                     }
                     UI.ZText{
                         text: qsTr("端口")
@@ -58,7 +55,6 @@ Item {
                     }
                     UI.ZTextInput{
                         id: port
-                        text: mysqlConfiguration.port
 
                     }
                     UI.ZText{
@@ -67,7 +63,6 @@ Item {
                     }
                     UI.ZTextInput{
                         id: max_connections
-                        text: mysqlConfiguration.max_connections
                     }
 
                 }
@@ -89,7 +84,6 @@ Item {
                         }
                         UI.ZTextInput{
                             id: back_log
-                            text: mysqlConfiguration.back_log
                         }
                         UI.ZText{
                             text: "thread_concurrency"
@@ -107,7 +101,6 @@ Item {
                         }
                         UI.ZTextInput{
                             id: key_buffer_size
-                            text: mysqlConfiguration.key_buffer_size
                         }
                         UI.ZText{
                             text: "innodb_buffer_pool_size"
@@ -116,7 +109,6 @@ Item {
                         }
                         UI.ZTextInput{
                             id: innodb_buffer_pool_size
-                            text: mysqlConfiguration.innodb_buffer_pool_size
                         }
                         UI.ZText{
                             text: "innodb_additional_mem_pool_size"
@@ -125,7 +117,6 @@ Item {
                         }
                         UI.ZTextInput{
                             id: innodb_additional_mem_pool_size
-                            text: mysqlConfiguration.innodb_additional_mem_pool_size
                         }
                         UI.ZText{
                             text: "innodb_log_buffer_size"
@@ -134,7 +125,6 @@ Item {
                         }
                         UI.ZTextInput{
                             id: innodb_log_buffer_size
-                            text: mysqlConfiguration.innodb_log_buffer_size
                         }
                         UI.ZText{
                             text: "query_cache_size"
@@ -143,7 +133,6 @@ Item {
                         }
                         UI.ZTextInput{
                             id: query_cache_size
-                            text: mysqlConfiguration.query_cache_size
                         }
                         UI.ZText{
                             text: "read_buffer_size"
@@ -152,7 +141,6 @@ Item {
                         }
                         UI.ZTextInput{
                             id: read_buffer_size
-                            text: mysqlConfiguration.read_buffer_size
                         }
                         UI.ZText{
                             text: "read_rnd_buffer_size"
@@ -161,7 +149,6 @@ Item {
                         }
                         UI.ZTextInput{
                             id: read_rnd_buffer_size
-                            text: mysqlConfiguration.read_rnd_buffer_size
                         }
                         UI.ZText{
                             text: "sort_buffer_size"
@@ -170,7 +157,6 @@ Item {
                         }
                         UI.ZTextInput{
                             id: sort_buffer_size
-                            text: mysqlConfiguration.sort_buffer_size
                         }
                         UI.ZText{
                             text: "tmp_table_size"
@@ -179,7 +165,6 @@ Item {
                         }
                         UI.ZTextInput{
                             id: tmp_table_size
-                            text: mysqlConfiguration.tmp_table_size
                         }
                     }
                 }
@@ -211,6 +196,9 @@ Item {
                     }
                 }
             }
+        }
+        Component.onCompleted: {
+            refresh_form()
         }
     }
     Rectangle {
@@ -304,7 +292,7 @@ Item {
         }
     }
     property bool downloading: false
-    property string downTaskId: null
+    property string downTaskId
 
     property var qsTrStrings: {
         "notfound":qsTr("未安装"),
@@ -318,25 +306,16 @@ Item {
         "unzipComplete":qsTr("解压完成"),
     }
 
-    // 连接信号
-    Connections{
-        target: mysqlServiceManager
-        onStatusSignal:{
-            root.serviceStatus = status
-            setStatus()
-        }
-    }
-
     Connections{
         target: lang
-        onLangSignal:{
+        function onLangSignal(){
             setStatus()
         }
     }
 
     Connections{
         target: mysqlServiceManager
-        onStatusSignal:{
+        function onStatusSignal(status){
             root.lastServiceStatus = root.serviceStatus
             root.serviceStatus = status
             setStatus()
@@ -345,7 +324,7 @@ Item {
 
     Connections{
         target: aria2
-        onFlagMsgSignal:{
+        function onFlagMsgSignal(msg, flag, taskId){
             console.log(taskId)
             if(flag === "mysql"){
                 snackbar.open(qsTrStrings["beginDownload"])
@@ -359,7 +338,7 @@ Item {
 
     Connections{
         target: aria2
-        onTaskStateSignal:{
+        function onTaskStateSignal(gid, process){
             if(gid === downTaskId){
                 var fileState = process[0]
                 console.log(JSON.stringify(fileState))
@@ -375,7 +354,7 @@ Item {
 
     Connections{
         target: mysqlConfiguration
-        onUnzipCompleteSignal:{
+        function onUnzipCompleteSignal(){
             snackbar.open(qsTrStrings["unzipComplete"])
         }
     }
@@ -393,23 +372,27 @@ Item {
     // 在线下载mysql后刷新界面
     Connections{
         target: root
-        onServiceStatusChanged:{
+        function onServiceStatusChanged(){
             if(root.lastServiceStatus === "notExist" && root.serviceStatus === "notfound"){
-                default_storage_engine.currentIndex = default_storage_engine.find(mysqlConfiguration.default_storage_engine)
-                port.text = mysqlConfiguration.port
-                max_connections.text = mysqlConfiguration.max_connections
-                back_log.text = mysqlConfiguration.back_log
-                key_buffer_size.text = mysqlConfiguration.key_buffer_size
-                innodb_buffer_pool_size.text = mysqlConfiguration.innodb_buffer_pool_size
-                innodb_additional_mem_pool_size.text = mysqlConfiguration.innodb_additional_mem_pool_size
-                innodb_log_buffer_size.text = mysqlConfiguration.innodb_log_buffer_size
-                query_cache_size.text = mysqlConfiguration.query_cache_size
-                read_buffer_size.text = mysqlConfiguration.read_buffer_size
-                read_rnd_buffer_size.text = mysqlConfiguration.read_rnd_buffer_size
-                sort_buffer_size.text = mysqlConfiguration.sort_buffer_size
-                tmp_table_size.text = mysqlConfiguration.tmp_table_size
+                refresh_form()
             }
         }
+    }
+
+    function refresh_form(){
+        default_storage_engine.currentIndex = default_storage_engine.find(mysqlConfiguration.default_storage_engine)
+        port.text = mysqlConfiguration.port
+        max_connections.text = mysqlConfiguration.max_connections
+        back_log.text = mysqlConfiguration.back_log
+        key_buffer_size.text = mysqlConfiguration.key_buffer_size
+        innodb_buffer_pool_size.text = mysqlConfiguration.innodb_buffer_pool_size
+        innodb_additional_mem_pool_size.text = mysqlConfiguration.innodb_additional_mem_pool_size
+        innodb_log_buffer_size.text = mysqlConfiguration.innodb_log_buffer_size
+        query_cache_size.text = mysqlConfiguration.query_cache_size
+        read_buffer_size.text = mysqlConfiguration.read_buffer_size
+        read_rnd_buffer_size.text = mysqlConfiguration.read_rnd_buffer_size
+        sort_buffer_size.text = mysqlConfiguration.sort_buffer_size
+        tmp_table_size.text = mysqlConfiguration.tmp_table_size
     }
 
     function setStatus(){
@@ -432,7 +415,7 @@ Item {
     // 连接信号
     Connections{
         target: mysqlServiceManager
-        onPwdSignal:{
+        function onPwdSignal(status){
             console.log(status)
             loading.zclose()
             snackbar.open(status == "ok" ? modifiedSuccessStr : modifiedSuccessFail)

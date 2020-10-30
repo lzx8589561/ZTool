@@ -40,3 +40,23 @@ def lanzou_download(url):
     # 拿到302跳转地址
     downUrl = oragin.next.url
     return downUrl
+
+def get_wufazhuce_info():
+    """
+    获取格言信息（从『一个。one』获取信息 http://wufazhuce.com/）
+    :return: str， 一句格言或者短语。
+    """
+    print('获取 ONE 信息...')
+    user_url = 'http://wufazhuce.com/'
+    try:
+        resp = requests.get(user_url)
+        if resp.status_code == 200:
+            soup_texts = BeautifulSoup(resp.text, 'html.parser')
+            # 『one -个』 中的每日一句
+            every_msg = soup_texts.find('div', class_='fp-one-cita').text  # 只取当天的这句
+            return every_msg
+        print('获取 ONE 失败。')
+    except Exception as exception:
+        print(str(exception))
+        return None
+    return None

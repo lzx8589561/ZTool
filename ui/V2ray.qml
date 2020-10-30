@@ -272,7 +272,7 @@ Item {
         anchors.bottom: bottomLay.top
         width: 200
 
-        property string currItemStatus: null
+        property string currItemStatus
 
         Rectangle{
             anchors.fill: parent
@@ -560,7 +560,7 @@ Item {
     }
     Connections{
         target: V2rayManager
-        onV2rayLogSignal:{
+        function onV2rayLogSignal(log){
             if(textArea.lineCount > 500){
                 //textArea.remove(0, textArea.text.indexOf("\n") + 1)
                 textArea.clear()
@@ -572,15 +572,15 @@ Item {
                 textArea.append(log)
             }
         }
-        onStartedSignal:{
+        function onStartedSignal(){
             proxyMode = setting.proxy_mode
             loading.zclose()
         }
-        onStopedSignal:{
+        function onStopedSignal(){
             proxyMode = setting.proxy_mode
             loading.zclose()
         }
-        onUpdPacStateSignal:{
+        function onUpdPacStateSignal(state){
             loading.zclose()
             if(state == 'success'){
                 mainSnackbar.open(pacUpdSuccessStr)
@@ -593,7 +593,7 @@ Item {
         target: root
 
         // 监听语言变化，修复位置按钮错位问题
-        onLangChangeSignal:{
+        function onLangChangeSignal(){
             selNode()
         }
     }

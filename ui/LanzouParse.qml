@@ -64,7 +64,7 @@ Item {
     }
     Connections{
         target: lanzouParse
-        onParseCompleteSignal:{
+        function onParseCompleteSignal(originUrl){
             loading.zclose()
             parseUrl.text = originUrl
             if(originUrl === ''){

@@ -10,8 +10,6 @@ import "./ui" as UI
 UI.ZLessWindow {
     id: window
     visible: true
-    width: setting.window_width
-    height: setting.window_height
     minimumWidth: 640
     minimumHeight: 480
     ztop: setting.top
@@ -52,7 +50,6 @@ UI.ZLessWindow {
         id: openAnimation
         target: window
         property: "opacity"
-        to: setting.opacity
         duration: 200
 
         onStarted: {
@@ -61,6 +58,9 @@ UI.ZLessWindow {
     }
     
     Component.onCompleted: {
+        window.width = setting.window_width
+        window.height = setting.window_height
+        openAnimation.to = setting.opacity
         console.log("background:"+setting.background_run)
         if(setting.background_run){
             closeAnimation.start()
@@ -97,7 +97,8 @@ UI.ZLessWindow {
                 checkable: true
                 checked: proxyMode == 'ProxyOnly'
                 onTriggered: {
-                    if(!checked){
+                    var to_checked = !checked
+                    if(!to_checked){
                         setting.proxy_mode = 'ProxyOnly'
                         V2rayManager.start()
                     }else{
@@ -111,19 +112,14 @@ UI.ZLessWindow {
                 checkable: true
                 checked: proxyMode == 'PacOnly'
                 onTriggered: {
-                    if(!checked){
+                    var to_checked = !checked
+                    if(!to_checked){
                         setting.proxy_mode = 'PacOnly'
                         V2rayManager.start()
                     }else{
                         setting.proxy_mode = 'Off'
                         V2rayManager.stop()
                     }
-                }
-            }
-            MenuItem {
-                text: qsTr("取消")
-                onTriggered: {
-                    
                 }
             }
             MenuItem {
@@ -166,8 +162,8 @@ UI.ZLessWindow {
     Rectangle {
         id: root
         anchors.fill: parent
-        property string serviceStatus: null
-        property string lastServiceStatus: null
+        property string serviceStatus
+        property string lastServiceStatus
         color: "white"
         signal langChangeSignal()
 
@@ -260,6 +256,12 @@ UI.ZLessWindow {
                 case 7:
                     UI.ZTheme.primaryColor = "#ff6a00"
                     break
+                case 8:
+                    UI.ZTheme.primaryColor = "#4a488e"
+                    break
+                case 9:
+                    UI.ZTheme.primaryColor = "#FF4040"
+                    break
                 }
             }
         }
@@ -347,20 +349,20 @@ UI.ZLessWindow {
     }
     Connections{
         target: V2rayManager
-        onStartedSignal:{
+        function onStartedSignal(){
             proxyMode = setting.proxy_mode
         }
-        onStopedSignal:{
+        function onStopedSignal(){
             proxyMode = setting.proxy_mode
         }
-        onQuitedSignal:{
+        function onQuitedSignal(){
             Qt.quit()
         }
     }
 
     Connections{
         target: aria2
-        onAria2StopedSignal:{
+        function onAria2StopedSignal(){
             // 退出aria2后退出v2ray
             V2rayManager.quit()
         }

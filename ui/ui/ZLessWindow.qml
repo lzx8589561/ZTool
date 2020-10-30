@@ -21,8 +21,8 @@ Window {
     property string zicon: "qrc:/img/db.svg"
     property int currVisi: Window.Windowed
     property bool fristWindowLoad: true
-    property int shadowWidthOrgin: null
-    property color shadowColorOrgin: null
+    property int shadowWidthOrgin
+    property color shadowColorOrgin
     property bool doubleClick: false
     default property alias zbody: zbodyComponent.data
     signal zdragWindowSizeChanged()

@@ -24,7 +24,6 @@ Item {
             antialiasing: true
             font.pixelSize: 10
             font.family:"arial"
-            text: hostEdit.read()
 
             MouseArea {
                 anchors.fill: parent
@@ -88,5 +87,9 @@ Item {
                 }
             }
         }
+    }
+
+    Component.onCompleted: {
+        textArea.text = hostEdit.read()
     }
 }

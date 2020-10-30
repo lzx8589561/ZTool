@@ -47,7 +47,7 @@ ListView {
 
     delegate: ItemDelegate {
         id: itemDelegate
-        width: parent.width
+        width: listView.width
         height: 40
         highlighted: ListView.isCurrentItem
         Item {

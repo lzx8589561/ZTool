@@ -64,7 +64,7 @@ Item {
     }
     Connections{
         target: sinaT
-        onParseCompleteSignal:{
+        function onParseCompleteSignal(shortUrl){
             loading.zclose()
             parseUrl.text = shortUrl
             if(shortUrl === ''){

@@ -13,7 +13,7 @@ Item {
         width: parent.width
         spacing: 20
         UI.ZText{
-            text: "Hello "+system.username
+            id: helloText
             style: "h1"
             color: UI.ZTheme.primaryColor
         }
@@ -29,7 +29,6 @@ Item {
                 UI.ZHref{
                     text: qsTr("官方网站")
                     style: "h3"
-                    zhref: "http://www.ilt.me"
                 }
                 UI.ZHref{
                     text: qsTr("开源地址")
@@ -79,5 +78,9 @@ Item {
             }
 
         }
+    }
+
+    Component.onCompleted: {
+        helloText.text = "Hello " + (system.username ? system.username : '')
     }
 }

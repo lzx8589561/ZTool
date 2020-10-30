@@ -31,6 +31,7 @@ class Setting(QObject):
         'window_height': 600,
         'proxy_mode': 'Off',
         'proxy_node': None,
+        'qweather_key': None,
     }
 
     def __init__(self, parent=None):
@@ -186,6 +187,15 @@ class Setting(QObject):
         
     def set_proxy_node(self, val):
         self.settings['proxy_node'] = val
+        self.save_cfg()
+    
+    @pyqtProperty(str, notify=futility_signal)
+    def qweather_key(self):
+        return self.settings['qweather_key']
+
+    @qweather_key.setter
+    def qweather_key(self, val):
+        self.settings['qweather_key'] = val
         self.save_cfg()
 
 

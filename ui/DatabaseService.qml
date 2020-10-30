@@ -22,7 +22,7 @@ Item {
             color: UI.ZTheme.primaryColor
         }
         UI.ZText{
-            text: system.platform
+            id: platformText
             style: "h3"
         }
         UI.ZText{
@@ -113,9 +113,9 @@ Item {
             }
         }
         UI.ZCheckBox{
+            id: autostartsCheckBox
             text: qsTr("开机自启")
             enabled: root.serviceStatus === "notfound" ? true : false
-            checked: setting.autostarts === 1 ? true : false
             onCheckStateChanged: {
                 setting.autostarts = checked ? 1 : 0
             }
@@ -125,13 +125,19 @@ Item {
             Layout.topMargin: 10
         }
         UI.ZTextInput{
+            id: serviceTextInput
             enabled: root.serviceStatus === "notfound" ? true : false
-            text: setting.service
             onTextChanged: {
                 setting.service = text
             }
         }
 
+    }
+
+    Component.onCompleted: {
+        platformText.text = system.platform
+        serviceTextInput.text = setting.service
+        autostartsCheckBox.checked = setting.autostarts === 1 ? true : false
     }
 
 }

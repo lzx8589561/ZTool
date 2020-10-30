@@ -50,7 +50,7 @@ Item {
     }
     Connections{
         target: window
-        onVisibleChanged:{
+        function onVisibleChanged(){
             if(window.visible){
                 aria2.selTask()
                 timer.start()
@@ -207,7 +207,7 @@ Item {
         anchors.right: parent.right
         anchors.left: parent.left
         anchors.bottom: parent.bottom
-        property string currItemStatus: null
+        property string currItemStatus
         delegate: ItemDelegate {
             highlighted: ListView.isCurrentItem
             width: listView.width;
@@ -324,14 +324,13 @@ Item {
     }
     Connections{
         target: aria2
-        onMsgSignal:{
-
+        function onMsgSignal(msg){
             snackbar.open(qsTrStrings[msg])
         }
     }
     Connections{
         target: aria2
-        onListenerUrl:{
+        function onListenerUrl(url){
             zingGG.text = url
             dialog.zopen()
             window.showWindow.start()
@@ -340,7 +339,7 @@ Item {
     }
     Connections{
         target: aria2
-        onProcessSignal:{
+        function onProcessSignal(process){
             var taskArray = []
             var tempItems = {}
             for(var j = 1;j < process.length;j++){

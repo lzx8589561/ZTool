@@ -8,15 +8,33 @@ Item {
     property int confirmLabelWidth: 60
     property int confirmEditWidth: 250
     property bool webSocketState: false
+    property bool initSchedulered: false
 
-    property var editJob: {}
+    property var editJob: {
+        "name":"",
+        "trigger":"",
+        "wxid":"",
+        "msg":"",
+        "second":"",
+        "minute":"",
+        "hour":"",
+        "day_of_week":"",
+        "weeks":0, 
+        "days":0, 
+        "hours":0, 
+        "minutes":0, 
+        "seconds":0,
+        "jitter":0,
+        "msg_type":"text",
+        "location":"",
+    }
     UI.ZTopMenu{
         id: wechatTopMenu
         height: 30
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.right: parent.right
-        zmodel: [{name:qsTr("监控")},{name:qsTr("任务")},/*{name:qsTr("消息组")}*/]
+        zmodel: [{name:qsTr("监控")},{name:qsTr("任务")},{name:qsTr("配置")}]
 
         zclickedCall: function(index){
             currTab = index
@@ -52,7 +70,7 @@ Item {
                     anchors.bottom: searchInput.top
                     width: 150
 
-                    property string currItemStatus: null
+                    property string currItemStatus
                     property string zviewBgColor: Qt.rgba(UI.ZTheme.primaryColor.r, UI.ZTheme.primaryColor.g, UI.ZTheme.primaryColor.b, 0.05)
                     property string zitemBgColor: "white"
                     property string zitemHoverBgColor: Qt.rgba(UI.ZTheme.primaryColor.r, UI.ZTheme.primaryColor.g, UI.ZTheme.primaryColor.b, 0.1)
@@ -332,9 +350,45 @@ Item {
 
                                 RowLayout{
                                     spacing: 20
+
                                     UI.ZText{
                                         Layout.preferredWidth: confirmLabelWidth
-                                        text: qsTr("消息")
+                                        text: qsTr("消息类型")
+                                    }
+
+                                    UI.ZComboBox{
+                                        id: msgTypeComboBox
+                                        Layout.fillWidth: true
+                                        width: confirmEditWidth
+                                        model: ["固定文本", "天气消息"]
+                                        Component.onCompleted: {
+                                            // currentIndex = find(editNode.type)
+                                        }
+                                    }
+                                }
+
+                                RowLayout{
+                                    visible: msgTypeComboBox.currentIndex == 1
+                                    spacing: 20
+                                    UI.ZText{
+                                        Layout.preferredWidth: confirmLabelWidth
+                                        text: qsTr("地区代码")
+                                    }
+
+                                    UI.ZTextInput{
+                                        id: locationTextInput
+                                        Layout.fillWidth: true
+                                        width: confirmEditWidth
+                                        text: editJob.location
+                                    }
+                                }
+
+                                RowLayout{
+                                    visible: msgTypeComboBox.currentIndex == 0
+                                    spacing: 20
+                                    UI.ZText{
+                                        Layout.preferredWidth: confirmLabelWidth
+                                        text: qsTr("固定文本消息")
                                     }
 
                                     UI.ZTextInput{
@@ -350,7 +404,7 @@ Item {
 
                                     UI.ZText{
                                         Layout.preferredWidth: confirmLabelWidth
-                                        text: qsTr("类型")
+                                        text: qsTr("触发类型")
                                     }
 
                                     UI.ZComboBox{
@@ -546,12 +600,15 @@ Item {
                             minutes:minutesTextInput.text, 
                             seconds:secondsTextInput.text,
                             jitter:jitterTextInput.text,
+                            location:locationTextInput.text,
+                            msg_type: msgTypeComboBox.currentIndex == 0 ? "text" : msgTypeComboBox.currentIndex == 1 ? "weather" : "text"
                         }
                         if(dialog.ztitleText == '添加'){
                             wechatManager.addJob(savedJob)
 
                         }else{
                             savedJob.job_id = editJob.job_id
+                            savedJob.job_enable = editJob.job_enable
                             wechatManager.editJob(savedJob)
                         }
                         getJobList()
@@ -564,6 +621,7 @@ Item {
                     anchors.topMargin: 5
                     anchors.left: parent.left
                     anchors.leftMargin: 5
+                    enabled: initSchedulered
 
                     onClicked: {
                         dialog.ztitleText = "添加"
@@ -582,6 +640,8 @@ Item {
                             "minutes":0, 
                             "seconds":0,
                             "jitter":0,
+                            "msg_type":"text",
+                            "location":"",
                         }
 
                         dialog.zopen()
@@ -595,7 +655,7 @@ Item {
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
 
-                    property string currItemStatus: null
+                    property string currItemStatus: ""
                     property string zviewBgColor: Qt.rgba(UI.ZTheme.primaryColor.r, UI.ZTheme.primaryColor.g, UI.ZTheme.primaryColor.b, 0.05)
                     property string zitemBgColor: "white"
                     property string zitemHoverBgColor: Qt.rgba(UI.ZTheme.primaryColor.r, UI.ZTheme.primaryColor.g, UI.ZTheme.primaryColor.b, 0.1)
@@ -633,7 +693,7 @@ Item {
                             }
 
                             UI.ZText {
-                                id: wxidLabel
+                                id: triggerLabel
                                 font.pixelSize: nameLabel.font.pixelSize
                                 color: UI.ZTheme.primaryColor
                                 anchors.top: nameLabel.bottom
@@ -647,6 +707,22 @@ Item {
                                 elide: Text.ElideMiddle
                             }
 
+                            UI.ZText {
+                                id: nextRunTimeLabel
+                                visible: enableSwitch.checked
+                                font.pixelSize: nameLabel.font.pixelSize
+                                color: UI.ZTheme.primaryColor
+                                anchors.top: nameLabel.bottom
+                                anchors.topMargin: 0
+                                anchors.left: triggerLabel.right
+                                anchors.leftMargin: 10
+                                width: nameLabel.width
+                                height: nameLabel.height
+                                text: next_run_time
+                                clip: true
+                                elide: Text.ElideMiddle
+                            }
+
                             UI.ZSwitch {
                                 id: enableSwitch
                                 anchors.right: editJobButton.left
@@ -654,7 +730,6 @@ Item {
                                 anchors.verticalCenter: parent.verticalCenter
                                 checked:job_enable
                                 onClicked: {
-                                    console.log('点击了开关')
                                     var currJob = jobListView.jobList[index]
                                     currJob['job_enable'] = checked
                                     wechatManager.editJob(currJob)
@@ -676,6 +751,7 @@ Item {
                                     dialog.ztitleText = "编辑"
                                     editJob = Object.assign({}, jobListView.jobList[index])
                                     triggerComboBox.currentIndex = triggerComboBox.find(editJob.trigger)
+                                    msgTypeComboBox.currentIndex = editJob.msg_type == "text" ? 0 : editJob.msg_type == "weather" ? 1 : 0 
                                     dialog.zopen()
                                 }
                             }
@@ -710,14 +786,42 @@ Item {
                         // currItemStatus = jobListView.listModel.get(currentIndex).status
                         // console.log(currItemStatus)
                     }
-                    Component.onCompleted: {
-                        getJobList()
-                    }
                 }
             }
 
             Item{
+                ColumnLayout{
+                    anchors.top: parent.top
+                    anchors.left: parent.left
+                    anchors.leftMargin: 10
+                    anchors.right: parent.right
+                    width: parent.width
+                    spacing: 5
+
+                    UI.ZText{
+                        text: qsTr("和风天气KEY")
+                    }
+
+                    UI.ZTextInput{
+                        id: qweatherKeyTextInput
+                    }
+                    UI.ZButton{
+                        id: saveCfgButton
+                        text: qsTr("保存")
+                        width: 55
+                        height: 25
+                        zfontSize: 10
+
+                        onClicked: {
+                            setting.qweather_key = qweatherKeyTextInput.text
+                            mainSnackbar.open(qsTr("保存成功"))
+                        }
+                    }
+                }
             }
+        }
+        Component.onCompleted:{
+            qweatherKeyTextInput.text = setting.qweather_key
         }
     }
     Rectangle {
@@ -753,19 +857,19 @@ Item {
             layoutDirection: Qt.RightToLeft
             UI.ZButton{
                 id: cfgSaveButton
-                text: webSocketState ? qsTr("重连") : qsTr("连接")
+                text: webSocketState ? qsTr("重连") : qsTr("注入并连接")
                 Layout.maximumWidth:100
                 Layout.rightMargin: 10
 
                 onClicked: {
-                    wechatManager.websocketInit()
+                    wechatManager.hook()
                 }
             }
         }
     }
     Connections{
         target: wechatManager
-        onUserListSignal:{
+        function onUserListSignal(userList){
             listView.listModel.clear()
             listView.listModelArray = userList.content
             for(var i = 0; i < listView.listModelArray.length; i++){
@@ -776,7 +880,7 @@ Item {
                 })
             }
         }
-        onWechatLogSignal:{
+        function onWechatLogSignal(log){
             if(logTextArea.lineCount > 500){
                 //logTextArea.remove(0, logTextArea.text.indexOf("\n") + 1)
                 logTextArea.clear()
@@ -788,7 +892,7 @@ Item {
                 logTextArea.append(log)
             }
         }
-        onWebsocketStateSignal: {
+        function onWebsocketStateSignal(state) {
             webSocketState = state
             if(state){
                 mainSnackbar.open(qsTr("Websocket连接成功"))
@@ -797,13 +901,31 @@ Item {
                 mainSnackbar.open(qsTr("Websocket连接错误"))
             }
         }
+        function onJobExedSignal() {
+            console.log(job_id+"执行完成")
+            getJobList()
+        }
+        function onHookStateSignal(state){
+            if(state == 'SUCCESS'){
+                wechatManager.websocketInit()
+                if(!initSchedulered){
+                    wechatManager.initScheduler()
+                    getJobList()
+                    initSchedulered = true
+                }
+            }else if(state == 'ERROR'){
+                mainSnackbar.open(qsTr("注入出错"))
+            }else if(state == 'NOT_FOUND_WECHAT'){
+                mainSnackbar.open(qsTr("请先启动微信"))
+            }
+        }
     }
 
     function getJobList(){
         var jobs = wechatManager.getJobsConf()
         jobListView.jobList = jobs
         jobListView.jobListModel.clear()
-        console.log(JSON.stringify(jobs))
+        var jobsState = wechatManager.getJobsState()
         for(var i = 0; i < jobs.length; i++){
             var item = jobs[i]
             jobListView.jobListModel.append({
@@ -822,7 +944,9 @@ Item {
                 minutes:item['minutes'], 
                 seconds:item['seconds'],
                 jitter:item['jitter'],
-                
+                msg_type:item['msg_type'],
+                location:item['location'],
+                next_run_time:jobsState[item['job_id']] ? jobsState[item['job_id']] : '',
             })
         }
     }

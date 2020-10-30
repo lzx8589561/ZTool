@@ -35,7 +35,7 @@ ListView {
     delegate: ItemDelegate {
         id: itemDelegate
         width: 70
-        height: parent.height
+        height: listView.height
         highlighted: ListView.isCurrentItem
         Item {
             anchors.fill: parent

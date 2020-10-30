@@ -24,8 +24,8 @@ Item {
         }
 
         UI.ZComboBox{
+            id: langComboBox
             model:["English","中文简体"]
-            currentIndex: setting.lang
             onZitemClicked: {
                 setting.lang = currentIndex
                 lang.setLanguage(currentIndex)
@@ -33,31 +33,31 @@ Item {
             }
         }
         UI.ZCheckBox{
+            id: listenurlCheckBox
             text: qsTr("监听下载链接")
-            checked: setting.listenurl
             onClicked: {
                 setting.listenurl = checked
             }
         }
         UI.ZCheckBox{
+            id: listenkeyboardCheckBox
             text: qsTr("监听按键")
-            checked: setting.listenkeyboard
             onClicked: {
                 setting.listenkeyboard = checked
                 keyboardListener.listener(checked)
             }
         }
         UI.ZCheckBox{
+            id: topCheckBox
             text: qsTr("窗口置顶")
-            checked: setting.top
             onClicked: {
                 window.ztop = checked
                 setting.top = checked
             }
         }
         UI.ZCheckBox{
+            id: autostartCheckBox
             text: qsTr("开机自启")
-            checked: setting.autostart
             onClicked: {
                 setting.autostart = checked
             }
@@ -67,8 +67,8 @@ Item {
             Layout.topMargin: 10
         }
         UI.ZSlider{
+            id: opacitySlider
             from: 0.1
-            value: setting.opacity
             to: 1.0
             width: 100
 
@@ -78,5 +78,14 @@ Item {
             }
 
         }
+    }
+
+    Component.onCompleted: {
+        langComboBox.currentIndex = setting.lang
+        listenurlCheckBox.checked = setting.listenurl
+        listenkeyboardCheckBox.checked = setting.listenkeyboard
+        topCheckBox.checked = setting.top
+        autostartCheckBox.checked = setting.autostart
+        opacitySlider.value = setting.opacity
     }
 }
