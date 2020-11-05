@@ -1,17 +1,14 @@
-# ZTool (原MysqlTool)
+# ZTool
 PyQt5 + Qt Quick Controller2
---------
-快速安装Mysql 5.6数据库，只需解压运行点击安装即可。绿色运行，方便迁移
 
-V2ray Windows 客户端 快速配置，链接导入，PAC、全局代理
 ## 功能
 - Mysql快速启动 / 密码修改，无需原始密码 / 快捷可视化配置
-- V2ray 客户端
+- V2ray 客户端 快速配置，链接导入，PAC、全局代理
 - Aria2 下载
 - Host编辑
 - 短链接生成
 - 蓝奏云解析
-- 微信机器人（时间调度自动发送消息）
+- 微信机器人（时间调度自动发送消息）定时向女朋友发送消息，可设置浮动、定时、cron，程序员必备暖心神器
 - 多语言热切换
 ## 技术栈
 - IDE：PyCharm + Qt creator
